@@ -1,24 +1,22 @@
-package com.dev.pingpong.backend.model;
+package com.dev.pingpong.backend.dto;
 
 
 import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(value = "Game")
+@Data
+@Builder
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Game {
-    @Id
+public class GameResponse {
     private String id;
     private String player1Id;
+    private String player1;
     private String player2Id;
+    private String player2;
     private int player1Score;
     private int player2Score;
     private int gamePoint;
     private String status;
-    
 }

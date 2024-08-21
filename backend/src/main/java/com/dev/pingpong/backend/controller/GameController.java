@@ -3,6 +3,7 @@ package com.dev.pingpong.backend.controller;
 
 import com.dev.pingpong.backend.dto.GameDto;
 import com.dev.pingpong.backend.dto.GameRequest;
+import com.dev.pingpong.backend.dto.GameResponse;
 import com.dev.pingpong.backend.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class GameController {
     private GameService gameService;
     
     @GetMapping("/getGames")
-    public ResponseEntity<List<GameDto>> getGames(){
+    public ResponseEntity<List<GameResponse>> getGames(){
         return gameService.getGames();
     }
     
@@ -28,8 +29,14 @@ public class GameController {
     }
     
     @PostMapping("/increment")
-    public ResponseEntity<Void> increment(@RequestParam String id, @RequestParam String player){
-        return gameService.increment(id,player);
+    public ResponseEntity<Void> increment(@RequestParam String id, @RequestParam String playerId){
+        return gameService.increment(id,playerId);
+    }
+    
+    @PostMapping("/getGamesByPlayer")
+    public ResponseEntity<List<GameResponse>> getGamesByPlayer(@RequestParam String playerId){
+        return gameService.getGamesByPlayer(playerId);
+        
         
     }
 }

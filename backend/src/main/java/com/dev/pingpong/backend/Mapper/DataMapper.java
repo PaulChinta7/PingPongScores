@@ -2,7 +2,9 @@ package com.dev.pingpong.backend.Mapper;
 
 import com.dev.pingpong.backend.dto.GameDto;
 import com.dev.pingpong.backend.dto.GameRequest;
+import com.dev.pingpong.backend.dto.PlayerDto;
 import com.dev.pingpong.backend.model.Game;
+import com.dev.pingpong.backend.model.Player;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -10,8 +12,8 @@ public class DataMapper {
     
     public Game MaptoGame(GameRequest gameRequest){
         return Game.builder()
-                .player1(gameRequest.getPlayer1())
-                .player2(gameRequest.getPlayer2())
+                .player1Id(gameRequest.getPlayer1Id())
+                .player2Id(gameRequest.getPlayer2Id())
                 .player1Score(0)
                 .player2Score(0)
                 .gamePoint(gameRequest.getGamePoint())
@@ -23,12 +25,33 @@ public class DataMapper {
     public GameDto MaptoGameDto(Game game) {
         return GameDto.builder()
                 .id(game.getId())
-                .player1(game.getPlayer1())
-                .player2(game.getPlayer2())
-                .player1Score(game.getPlayer1Score())
-                .player2Score(game.getPlayer2Score())
+                .player1Id(game.getPlayer1Id())
+                .player2Id(game.getPlayer2Id())
+                .player1Score(0)
+                .player2Score(0)
                 .gamePoint(game.getGamePoint())
-                .status(game.getStatus())
+                .status("LIVE")
                 .build();
+    }
+
+    public PlayerDto MaptoPlayerDto(Player player) {
+        return PlayerDto.builder().id(player.getId())
+                .name(player.getName())
+                .email(player.getEmail())
+                .gamesWon(player.getGamesWon())
+                .gamesLost(player.getGamesLost())
+                .build();
+        
+        
+    }
+
+    public Player MaptoPlayer(PlayerDto playerDto) {
+        return Player.builder().id(playerDto.getId())
+                .name(playerDto.getName())
+                .email(playerDto.getEmail())
+                .gamesWon(playerDto.getGamesWon())
+                .gamesLost(playerDto.getGamesLost())
+                .build();
+
     }
 }

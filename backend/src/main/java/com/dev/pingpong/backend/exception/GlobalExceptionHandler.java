@@ -16,4 +16,18 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ErrorResponse.builder().msg(ex.getMessage()).status(HttpStatus.OK.value()).build(), HttpStatus.OK);
         
     }
+
+    @ExceptionHandler(PlayerNotFoundException.class)
+    @ResponseBody
+    public ResponseEntity<ErrorResponse> handleGameNotFoundException(PlayerNotFoundException ex){
+        return new ResponseEntity<>(ErrorResponse.builder().msg(ex.getMessage()).status(HttpStatus.OK.value()).build(), HttpStatus.OK);
+
+    }
+
+    @ExceptionHandler(GameCompletedException.class)
+    @ResponseBody
+    public ResponseEntity<ErrorResponse> handleGameNotFoundException(GameCompletedException ex){
+        return new ResponseEntity<>(ErrorResponse.builder().msg(ex.getMessage()).status(HttpStatus.OK.value()).build(), HttpStatus.OK);
+
+    }
 }

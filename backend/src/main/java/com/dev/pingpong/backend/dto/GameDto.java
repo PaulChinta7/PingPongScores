@@ -10,8 +10,8 @@ import lombok.*;
 @NoArgsConstructor
 public class GameDto {
     private String id;
-    private String player1;
-    private String player2;
+    private String player1Id;
+    private String player2Id;
     private int player1Score;
     private int player2Score;
     private int gamePoint;

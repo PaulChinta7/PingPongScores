@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GameRequest {
-    private String player1;
-    private String player2;
+    private String player1Id;
+    private String player2Id;
     private int gamePoint;
 }
