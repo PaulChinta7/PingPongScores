@@ -12,6 +12,7 @@ public class PlayerDto {
     private String id;
     private String name;
     private String email;
+    private  String password;
     private int gamesWon;
     private int gamesLost;
 }

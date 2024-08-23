@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DataMapper {
-    
     public Game MaptoGame(GameRequest gameRequest){
         return Game.builder()
                 .player1Id(gameRequest.getPlayer1Id())
@@ -38,6 +37,7 @@ public class DataMapper {
         return PlayerDto.builder().id(player.getId())
                 .name(player.getName())
                 .email(player.getEmail())
+                .password(player.getPassword())
                 .gamesWon(player.getGamesWon())
                 .gamesLost(player.getGamesLost())
                 .build();
@@ -49,6 +49,7 @@ public class DataMapper {
         return Player.builder().id(playerDto.getId())
                 .name(playerDto.getName())
                 .email(playerDto.getEmail())
+                .password(playerDto.getPassword())
                 .gamesWon(playerDto.getGamesWon())
                 .gamesLost(playerDto.getGamesLost())
                 .build();

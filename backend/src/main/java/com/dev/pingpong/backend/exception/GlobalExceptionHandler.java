@@ -30,4 +30,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ErrorResponse.builder().msg(ex.getMessage()).status(HttpStatus.OK.value()).build(), HttpStatus.OK);
 
     }
+    @ExceptionHandler(JwtTokenExpiredException.class)
+    @ResponseBody
+    public ResponseEntity<ErrorResponse> handleGameNotFoundException(JwtTokenExpiredException ex){
+        return new ResponseEntity<>(ErrorResponse.builder().msg(ex.getMessage()).status(HttpStatus.OK.value()).build(), HttpStatus.OK);
+
+    }
 }
