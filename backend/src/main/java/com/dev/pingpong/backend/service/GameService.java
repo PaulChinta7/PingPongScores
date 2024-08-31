@@ -8,6 +8,7 @@ import com.dev.pingpong.backend.exception.GameCompletedException;
 import com.dev.pingpong.backend.exception.GameNotFoundException;
 import com.dev.pingpong.backend.exception.PlayerNotFoundException;
 import com.dev.pingpong.backend.model.Game;
+import com.dev.pingpong.backend.model.Player;
 import com.dev.pingpong.backend.repository.GameRepository;
 import com.dev.pingpong.backend.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +67,7 @@ public class GameService {
         if(game.isPresent()){
 //          throws exception if player not found in databases
             if(game.get().getStatus().equals("LIVE")) {
-                playerRepository.findById(playerId).orElseThrow(() -> new PlayerNotFoundException("Player is not found in the database"));
+                Player player=playerRepository.findById(playerId).orElseThrow(() -> new PlayerNotFoundException("Player is not found in the database"));
                 if (playerId.equals(game.get().getPlayer1Id()) && game.get().getPlayer1Score() < game.get().getGamePoint()) {
                     game.get().setPlayer1Score(game.get().getPlayer1Score() + 1);
 
@@ -74,9 +75,28 @@ public class GameService {
                     game.get().setPlayer2Score(game.get().getPlayer2Score() + 1);
 
                 }
-                if(game.get().getPlayer1Score()==game.get().getGamePoint() ||  game.get().getPlayer2Score()==game.get().getGamePoint()){
+                if(game.get().getPlayer1Score()==game.get().getGamePoint()){
                     game.get().setStatus("COMPLETED");
+                    Player player1=playerRepository.findById(game.get().getPlayer1Id()).get();
+                    Player player2=playerRepository.findById(game.get().getPlayer2Id()).get();
+                    player1.setGamesWon(player1.getGamesWon()+1);
+                    player2.setGamesLost(player2.getGamesLost()+1);
+                    playerRepository.save(player1);
+                    playerRepository.save(player2);
+                   
                 }
+                else if(  game.get().getPlayer2Score()==game.get().getGamePoint()){
+                    game.get().setStatus("COMPLETED");
+                    Player player1=playerRepository.findById(game.get().getPlayer1Id()).get();
+                    Player player2=playerRepository.findById(game.get().getPlayer2Id()).get();
+                    player2.setGamesWon(player2.getGamesWon()+1);
+                    player1.setGamesLost(player1.getGamesLost()+1);
+                    playerRepository.save(player1);
+                    playerRepository.save(player2);
+                
+                }
+                
+                
             }
             else{
                 throw new GameCompletedException("Game is complete");
