@@ -1,8 +1,10 @@
 package com.dev.pingpong.backend.controller;
 
+import com.dev.pingpong.backend.dto.JwtResponse;
 import com.dev.pingpong.backend.dto.PlayerDto;
 import com.dev.pingpong.backend.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,13 +16,13 @@ public class AuthenticationController {
     PlayerService playerService;
     
     @PostMapping("/login")
-    public String login(@RequestBody PlayerDto user){
+    public JwtResponse login(@RequestBody PlayerDto user){
         return playerService.verify(user);
     }
 
     @PostMapping("/register")
-    public String register() {
-        return "registration success";
+    public ResponseEntity<PlayerDto> register(@RequestBody PlayerDto playerDto){
+        return playerService.addPlayer(playerDto);
     }
     
     

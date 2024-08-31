@@ -112,4 +112,26 @@ public class GameService {
             return new ResponseEntity<>(mappedGames,HttpStatus.OK);
         
     }
+
+    public ResponseEntity<GameResponse> getGamesById(String gameId) {
+        Game game=gameRepository.findById(gameId).orElseThrow(()->new GameNotFoundException("Game not found in the database"));
+        
+        String player1Name=playerRepository.findById(game.getPlayer1Id()).orElseThrow(()-> new PlayerNotFoundException("Player Not found")).getName();
+        String player2Name=playerRepository.findById(game.getPlayer2Id()).orElseThrow(()-> new PlayerNotFoundException("Player Not found")).getName();
+        return new ResponseEntity<>(GameResponse.builder()
+                .id(game.getId())
+                .player1Id(game.getPlayer1Id())
+                .player1(player1Name)
+                .player1Score(game.getPlayer1Score())
+                .player2Id(game.getPlayer2Id())
+                .player2(player2Name)
+                .player2Score(game.getPlayer2Score())
+                .gamePoint(game.getGamePoint())
+                .status(game.getStatus())
+                .build(),HttpStatus.OK);
+        
+
+
+
+    }
 }

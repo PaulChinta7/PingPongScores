@@ -3,6 +3,7 @@ package com.dev.pingpong.backend.Mapper;
 import com.dev.pingpong.backend.dto.GameDto;
 import com.dev.pingpong.backend.dto.GameRequest;
 import com.dev.pingpong.backend.dto.PlayerDto;
+import com.dev.pingpong.backend.dto.PlayerResponse;
 import com.dev.pingpong.backend.model.Game;
 import com.dev.pingpong.backend.model.Player;
 import org.springframework.stereotype.Component;
@@ -43,6 +44,16 @@ public class DataMapper {
                 .build();
         
         
+    }
+    public PlayerResponse MaptoPlayerResponse(Player player) {
+        return PlayerResponse.builder().id(player.getId())
+                .name(player.getName())
+                .email(player.getEmail())
+                .gamesWon(player.getGamesWon())
+                .gamesLost(player.getGamesLost())
+                .build();
+
+
     }
 
     public Player MaptoPlayer(PlayerDto playerDto) {

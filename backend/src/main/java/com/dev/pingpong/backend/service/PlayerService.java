@@ -1,11 +1,15 @@
 package com.dev.pingpong.backend.service;
 
 import com.dev.pingpong.backend.Mapper.DataMapper;
-import com.dev.pingpong.backend.dto.PlayerDto;
+import com.dev.pingpong.backend.dto.*;
+import com.dev.pingpong.backend.exception.PlayerNotFoundException;
+import com.dev.pingpong.backend.model.Game;
 import com.dev.pingpong.backend.model.Player;
+import com.dev.pingpong.backend.repository.GameRepository;
 import com.dev.pingpong.backend.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,6 +26,10 @@ public class PlayerService {
 
     @Autowired
     PlayerRepository playerRepository;
+
+    @Autowired
+    GameService gameService;
+    
     private  BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder(10);
 
     @Autowired
@@ -50,7 +58,7 @@ public class PlayerService {
         return new ResponseEntity<>(dataMapper.MaptoPlayerDto(saved_player),HttpStatus.OK);
     }
 
-    public String verify(PlayerDto user) {
+    public JwtResponse verify(PlayerDto user) {
         
         Authentication authentication=
                 authenticationManager.authenticate(
@@ -58,11 +66,26 @@ public class PlayerService {
                                 user.getName()
                                 ,user.getPassword()));
         if( authentication.isAuthenticated()){
-            return jwtService.generateToken(user.getName());
+            return JwtResponse.builder()
+                    .token(jwtService.generateToken(user.getName()))
+                    .id(playerRepository.findByName(user.getName()).getId())
+                    .status(207).build();
         }
         else{
-            return "Not authorized";
+            return JwtResponse.builder()
+                    .token("")
+                    .id("")
+                    .status(401).build();
 
         }
+    }
+
+    public ResponseEntity<PlayerResponse> getPlayerById(String id) {
+        Player fetched_player=playerRepository.findById(id).orElseThrow(()->new PlayerNotFoundException("Player Not found in the database"));
+        PlayerResponse mapped_playerResponse=dataMapper.MaptoPlayerResponse(fetched_player);
+        List<GameResponse> fetched_games=gameService.getGamesByPlayer(id).getBody();
+        mapped_playerResponse.setGames(fetched_games);
+        
+        return new ResponseEntity<>(mapped_playerResponse,HttpStatus.OK);
     }
 }

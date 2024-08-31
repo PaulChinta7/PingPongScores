@@ -2,7 +2,9 @@ package com.dev.pingpong.backend.controller;
 
 
 import com.dev.pingpong.backend.dto.PlayerDto;
+import com.dev.pingpong.backend.dto.PlayerResponse;
 import com.dev.pingpong.backend.model.Player;
+import com.dev.pingpong.backend.repository.PlayerRepository;
 import com.dev.pingpong.backend.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/player")
+@CrossOrigin(origins = "http://localhost:3000")
 public class PlayerController {
     
     
@@ -23,6 +26,13 @@ public class PlayerController {
         
         return playerService.getPlayers();
     }
+
+
+    @PostMapping("/getPlayerById")
+    public ResponseEntity<PlayerResponse> getPlayerById(@RequestParam String id){
+        return playerService.getPlayerById(id);
+    }
+    
     @PostMapping("/addPlayer")
     public ResponseEntity<PlayerDto> addPlayer(@RequestBody PlayerDto playerDto){
         return playerService.addPlayer(playerDto);

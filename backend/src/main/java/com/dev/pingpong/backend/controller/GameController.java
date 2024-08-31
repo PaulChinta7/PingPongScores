@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/game")
+@CrossOrigin(origins = "http://localhost:3000")
 public class GameController {
     
     @Autowired
@@ -39,4 +40,10 @@ public class GameController {
         
         
     }
+
+    @PostMapping("/getGamesById")
+    public ResponseEntity<GameResponse> getGamesById(@RequestParam String gameId){
+        return gameService.getGamesById(gameId);
+    }
+    
 }

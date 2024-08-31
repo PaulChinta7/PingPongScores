@@ -13,14 +13,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(GameNotFoundException.class)
     @ResponseBody
     public ResponseEntity<ErrorResponse> handleGameNotFoundException(GameNotFoundException ex){
-        return new ResponseEntity<>(ErrorResponse.builder().msg(ex.getMessage()).status(HttpStatus.OK.value()).build(), HttpStatus.OK);
+        return new ResponseEntity<>(ErrorResponse.builder().msg(ex.getMessage()).status(HttpStatus.NOT_FOUND.value()).build(), HttpStatus.OK);
         
     }
 
     @ExceptionHandler(PlayerNotFoundException.class)
     @ResponseBody
     public ResponseEntity<ErrorResponse> handleGameNotFoundException(PlayerNotFoundException ex){
-        return new ResponseEntity<>(ErrorResponse.builder().msg(ex.getMessage()).status(HttpStatus.OK.value()).build(), HttpStatus.OK);
+        return new ResponseEntity<>(ErrorResponse.builder().msg(ex.getMessage()).status(HttpStatus.NOT_FOUND.value()).build(), HttpStatus.OK);
 
     }
 
@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(JwtTokenExpiredException.class)
     @ResponseBody
     public ResponseEntity<ErrorResponse> handleGameNotFoundException(JwtTokenExpiredException ex){
-        return new ResponseEntity<>(ErrorResponse.builder().msg(ex.getMessage()).status(HttpStatus.OK.value()).build(), HttpStatus.OK);
+        return new ResponseEntity<>(ErrorResponse.builder().msg(ex.getMessage()).status(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED.value()).build(), HttpStatus.OK);
 
     }
 }

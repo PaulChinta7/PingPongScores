@@ -32,7 +32,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
        return http.csrf(customizer->customizer.disable())
         .authorizeHttpRequests(request->request
-                .requestMatchers("new/login","new/register","player/addPlayer").permitAll()
+                .requestMatchers("new/login","new/register").permitAll()
                 .anyRequest().authenticated())
         .formLogin(Customizer.withDefaults())
         .httpBasic(Customizer.withDefaults())
