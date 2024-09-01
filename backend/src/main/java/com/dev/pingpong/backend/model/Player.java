@@ -3,6 +3,8 @@ package com.dev.pingpong.backend.model;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Document(value = "Player")
 @Getter
 @Setter
@@ -16,4 +18,5 @@ public class Player {
     private String password;
     private int gamesWon;
     private int gamesLost;
+    private List<String> friends;
 }

@@ -36,4 +36,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ErrorResponse.builder().msg(ex.getMessage()).status(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED.value()).build(), HttpStatus.OK);
 
     }
+    @ExceptionHandler(FriendRequestAlreadySent.class)
+    @ResponseBody
+    public ResponseEntity<ErrorResponse> handleGameNotFoundException(FriendRequestAlreadySent ex){
+        return new ResponseEntity<>(ErrorResponse.builder().msg(ex.getMessage()).status(HttpStatus.ALREADY_REPORTED.value()).build(), HttpStatus.ALREADY_REPORTED);
+
+    }
 }

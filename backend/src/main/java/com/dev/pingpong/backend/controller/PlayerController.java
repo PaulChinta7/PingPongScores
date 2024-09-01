@@ -22,7 +22,7 @@ public class PlayerController {
     PlayerService playerService;
     
     @GetMapping("/getPlayers")
-    public ResponseEntity<List<PlayerDto>> getPlayers(){
+    public ResponseEntity<List<PlayerResponse>> getPlayers(){
         
         return playerService.getPlayers();
     }

@@ -17,4 +17,6 @@ public class PlayerResponse {
     private int gamesWon;
     private int gamesLost;
     private List<GameResponse> games;
+    private List<String> friends;
+    
 }

@@ -38,11 +38,11 @@ public class PlayerService {
     JWTService jwtService;
     @Autowired
     DataMapper dataMapper;
-    public ResponseEntity<List<PlayerDto>> getPlayers() {
+    public ResponseEntity<List<PlayerResponse>> getPlayers() {
         List<Player> fetchedPlayers=playerRepository.findAll();
          
-        List<PlayerDto> mappedPlayers=new ArrayList<>();
-        for(Player player:fetchedPlayers) mappedPlayers.add(dataMapper.MaptoPlayerDto(player));
+        List<PlayerResponse> mappedPlayers=new ArrayList<>();
+        for(Player player:fetchedPlayers) mappedPlayers.add(dataMapper.MaptoPlayerResponse(player));
         
         return new ResponseEntity<>(mappedPlayers, HttpStatus.OK);
     }

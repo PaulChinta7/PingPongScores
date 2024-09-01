@@ -2,6 +2,8 @@ package com.dev.pingpong.backend.dto;
 
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @Getter
 @Setter
@@ -15,4 +17,5 @@ public class PlayerDto {
     private  String password;
     private int gamesWon;
     private int gamesLost;
+    private List<String> friends;
 }

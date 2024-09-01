@@ -1,15 +1,15 @@
 package com.dev.pingpong.backend.Mapper;
 
-import com.dev.pingpong.backend.dto.GameDto;
-import com.dev.pingpong.backend.dto.GameRequest;
-import com.dev.pingpong.backend.dto.PlayerDto;
-import com.dev.pingpong.backend.dto.PlayerResponse;
+import com.dev.pingpong.backend.dto.*;
+import com.dev.pingpong.backend.model.FriendRequest;
 import com.dev.pingpong.backend.model.Game;
 import com.dev.pingpong.backend.model.Player;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DataMapper {
+    
+
     public Game MaptoGame(GameRequest gameRequest){
         return Game.builder()
                 .player1Id(gameRequest.getPlayer1Id())
@@ -41,6 +41,7 @@ public class DataMapper {
                 .password(player.getPassword())
                 .gamesWon(player.getGamesWon())
                 .gamesLost(player.getGamesLost())
+                .friends(player.getFriends())
                 .build();
         
         
@@ -51,6 +52,7 @@ public class DataMapper {
                 .email(player.getEmail())
                 .gamesWon(player.getGamesWon())
                 .gamesLost(player.getGamesLost())
+                .friends(player.getFriends())
                 .build();
 
 
@@ -63,7 +65,25 @@ public class DataMapper {
                 .password(playerDto.getPassword())
                 .gamesWon(playerDto.getGamesWon())
                 .gamesLost(playerDto.getGamesLost())
+                .friends(playerDto.getFriends())
                 .build();
 
+    }
+
+    public FriendRequest MaptoFriendRequest(FriendRequestDto friendRequestDto) {
+        return FriendRequest.builder()
+                .id(friendRequestDto.getId())
+                .acceptorId(friendRequestDto.getAcceptorId())
+                .requestorId(friendRequestDto.getRequestorId())
+                .status(friendRequestDto.getStatus())
+                .build();
+    }
+    public FriendRequestDto MaptoFriendRequestDto(FriendRequest friendRequest) {
+        return FriendRequestDto.builder()
+                .id(friendRequest.getId())
+                .acceptorId(friendRequest.getAcceptorId())
+                .requestorId(friendRequest.getRequestorId())
+                .status(friendRequest.getStatus())
+                .build();
     }
 }
