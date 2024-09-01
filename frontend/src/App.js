@@ -7,6 +7,8 @@ import { Link, Route,BrowserRouter as Router, Routes } from 'react-router-dom';
 import Profile from './components/Profile';
 import Register from './components/Register';
 import LiveGame from './components/LiveGame';
+import Search from './components/Search';
+import Notification from './components/Notification';
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           <li><Link to="/live">Game</Link></li>
           <li><Link to="/myfriends">Friends</Link></li>
           <li><Link to="/profile">Profile</Link></li>
+          <li><Link to="/search">Search</Link></li>
+          <li><Link to="/notifications">Notifs</Link></li>
         </ul>
       </nav>
 
@@ -30,6 +34,8 @@ function App() {
         <Route path="/myfriends" element={<Friends />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/notifications" element={<Notification />} />
         <Route path="/logout" element={<Login />} />
       </Routes>
     </Router>
