@@ -5,6 +5,9 @@ const Login = () => {
     const [username,setUsername]=useState("");
     const [password,setPassword]=useState("");
     const apiUrl=process.env.REACT_APP_API_URL;
+    sessionStorage.setItem('token','');
+    sessionStorage.setItem('id','');
+    sessionStorage.setItem('gameId','');
     const navigate=useNavigate();
     const handleUsernameChange=(e)=>{setUsername(e.target.value)};
     const handlePasswordChange=(e)=>{setPassword(e.target.value)};
@@ -26,16 +29,24 @@ const Login = () => {
                 },
                 body:JSON.stringify(loginData)
             });
-            if(response.status===401){
-                console.log("Login credentials are wrong!!");
+            if (response.ok) { 
+                const token = await response.json();
+                
+                if(token.status===207){
+                    sessionStorage.setItem('token', token.token);
+                    sessionStorage.setItem('id',token.id);
+                    navigate("/home");
+                }
+                if(token.status===404){
+                    console.log("A username not found");
+                }
+            } 
+            else if(response.status===401){
+                console.log("Wrong password");
             }
-            // based on status change handle the exception
-            if(response.ok){
-
-                const token=await response.text();
-                sessionStorage.setItem('token',token);
-                navigate("/home");
-            }
+             else {
+                console.log("An unexpected error occurred.");
+            } 
 
         }
         catch(error){

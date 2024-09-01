@@ -1,21 +1,18 @@
 import React from 'react'
 
-const Match = () => {
+const Match = (props) => {
+
+  const game=props.game;
+  
   return (
-    <><div>
-    <span>08/30/2024</span>
-    <span>8:03pm</span>
-    </div>
-    <div>
-     <span>Rahul</span>
-     <span>vs</span>
-     <span>Paul</span>
-    </div>
-    <div>
-      <span>14</span>
-      <span>-</span>
-      <span>21</span>
-    </div></>
+    <>
+    <span>{game.id}</span> <br />
+    <span>08/30/2024 | 8:03pm</span> <br />
+    <span>GamePoint {game.gamePoint}</span> <br />
+     <span>{game.player1} vs {game.player2}</span> <br />
+     <span>{game.player1Score} - {game.player2Score}</span> <br />
+     <span>Status: {game.status}</span>
+      </>
   )
 }
 
