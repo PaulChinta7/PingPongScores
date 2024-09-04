@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import { Container } from 'react-bootstrap';
 const Login = () => {
     const [username,setUsername]=useState("");
     const [password,setPassword]=useState("");
@@ -60,15 +62,29 @@ const Login = () => {
 
 
   return (
-    <div>
-        <label htmlFor="">username</label>
-        <input type="text" onChange={handleUsernameChange}/>
-        <br />
-        <label htmlFor="">password</label>
-        <input type="password" onChange={handlePasswordChange}/>
-        <button onClick={handleLogin}>login</button>
+    <>
+    <Container className='defaultWidth'>
 
-    </div>
+    <Form>
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Label>Username</Form.Label>
+        <Form.Control type="text" placeholder="Enter username"   onChange={handleUsernameChange}/>
+        <Form.Text className="text-muted">
+          We'll never share your email with anyone else.
+        </Form.Text>
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Label>Password</Form.Label>
+        <Form.Control type="password" placeholder="Password"  onChange={handlePasswordChange}/>
+      </Form.Group>
+    
+      <Button variant="primary"onClick={handleLogin}>
+        Login
+      </Button>
+    </Form>
+    </Container>
+    </>
   )
 }
 

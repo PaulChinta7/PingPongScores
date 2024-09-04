@@ -54,7 +54,7 @@ const Notification = () => {
   return (
     <>
     <div>Requests</div>
-    {requests.map(request=>( <div key={request.id}> <p> {request.requestorId}  </p> <button onClick={()=>{handleAcceptFriend(request.id)}}>Accept</button> <button>Reject</button> </div> ))}
+    {requests.map(request=>( <div key={request.id}> <p> {request.requestorName} has requested to be your friend  </p> <button onClick={()=>{handleAcceptFriend(request.id)}}>Accept</button> <button>Reject</button> </div> ))}
     </>
   )
 }

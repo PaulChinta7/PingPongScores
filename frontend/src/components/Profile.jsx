@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import Match from './Match'
 import { useNavigate } from 'react-router-dom';
+// import Friends from './Friends';
 
 const Profile = () => {
 
@@ -28,8 +29,16 @@ const Profile = () => {
         navigate("/");
       }
 
-      const data=await response.json();
-      setPlayerData(data);
+      if(response.status===404){
+        const data=await response.json();
+        console.log(data);
+        // setPlayerData(data);
+      }
+      else{
+        const data=await response.json();
+        // console.log(data);
+        setPlayerData(data);
+      }
       
 
     }
@@ -39,21 +48,35 @@ const Profile = () => {
   }
   useEffect(()=>{
     fetchPlayerData();
-  },[])
+  })
 
   return (
     <>
-    Account details  <br />
-    <span>{playerData.name}</span><br />
-    <span>{playerData.email}</span><br />
-    <span>Won</span><span>{playerData.gamesWon}</span>
-    <span>Lost</span><span>{playerData.gamesLost}</span><br />
-    <span>Win % </span><span>{playerData.gamesWon}</span>
+    <div className='container py-5'>
+        <div className="row">
+          
+            <div className="col p-0">
+              <div>Account details  </div>
+              <div>
+                <span>Username</span>
+                <span className='text-secondary'>{playerData.name}</span>
+                <span className='p-0'>Email</span>
+                <span  className='text-secondary'>{playerData.email}</span>
+                <div className='d-flex'>
+                <span className='p-0'>Won {playerData.gamesWon}</span> &ensp;
+                <span className='p-0'>Lost {playerData.gamesLost}</span>
+                </div>
+              </div>
+              
+            </div>
+            <div className="col">
+            <div>History</div>
+            {playerData.games.map(game=>(<Match key={game.id} game={game}/>))}
+            </div>
+        </div>
+    </div>
+   
     
-    <br />
-    <div>History</div>
-
-    {playerData.games.map(game=>(<Match key={game.id} game={game}/>))}
     
     </>
   )

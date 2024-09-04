@@ -76,7 +76,7 @@ const response= await fetch(`${apiUrl}/friendRequest/addFriend`,{
     <p>Players</p>
     <input type="text" placeholder='search'/>
     <ul>
-        {players.map(player=>( <li key={player.id}>{player.name} |  {player.email} | Games Won :{player.gamesWon} | Games Lost : {player.gamesLost} | <button onClick={()=>{handleAddFriend(player.id)}}>Add Friend</button></li> ))}
+        {players.map(player=>( <li key={player.id}>{player.name} |  {player.email} | Games Won :{player.gamesWon} | Games Lost : {player.gamesLost} | <button  className='btn btn-dark' onClick={()=>{handleAddFriend(player.id)}}>Add Friend</button></li> ))}
     </ul>
     
     </>

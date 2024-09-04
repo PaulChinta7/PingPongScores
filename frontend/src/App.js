@@ -3,28 +3,19 @@ import Game from './components/Game';
 import Friends from './components/Friends';
 import Home from './components/Home';
 import './App.css';
-import { Link, Route,BrowserRouter as Router, Routes } from 'react-router-dom';
+import {Route,BrowserRouter as Router, Routes } from 'react-router-dom';
 import Profile from './components/Profile';
 import Register from './components/Register';
 import LiveGame from './components/LiveGame';
 import Search from './components/Search';
 import Notification from './components/Notification';
+import NavBar from './components/NavBar';
 
 function App() {
   return (
     <>
     <Router>
-      <nav>
-        <ul>
-          <li><Link to="/home">Home</Link></li>
-          <li><Link to="/game">Create</Link></li>
-          <li><Link to="/live">Game</Link></li>
-          <li><Link to="/myfriends">Friends</Link></li>
-          <li><Link to="/profile">Profile</Link></li>
-          <li><Link to="/search">Search</Link></li>
-          <li><Link to="/notifications">Notifs</Link></li>
-        </ul>
-      </nav>
+      <NavBar/>
 
       <Routes>
         <Route path="/" element={<Login />} />
