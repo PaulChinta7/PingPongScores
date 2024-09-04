@@ -30,20 +30,24 @@ public class FriendRequestService {
     
     @Autowired
     DataMapper dataMapper;
+    
+
 
     public ResponseEntity<Void> addFriendRequest(FriendRequestDto friendRequestDto) {
-        
+//        if friend request already there you dont send one more request.
         Optional<FriendRequest> request=friendRequestRepository.findRequest(
                 friendRequestDto.getRequestorId(),
                 friendRequestDto.getAcceptorId());
-        if(request.isPresent()){
+        if(request.isPresent()) {
             throw new FriendRequestAlreadySent("Friend Request already sent");
         }
+//        creating a friend request and adding into the db table with pending.
         else{
         FriendRequest friendRequest=dataMapper.MaptoFriendRequest(friendRequestDto);
         friendRequest.setStatus("PENDING");
         FriendRequest saved_friendRequest=friendRequestRepository.save((friendRequest));
         return new ResponseEntity<>(HttpStatus.OK);
+            
         }
     }
 
@@ -52,7 +56,10 @@ public class FriendRequestService {
         List<FriendRequest> friendRequests=friendRequestRepository.findByAcceptorIdPending(acceptorId);
         List<FriendRequestDto> mapped_friendRequests=new ArrayList<>();
         for(FriendRequest friendRequest: friendRequests){
-            mapped_friendRequests.add(dataMapper.MaptoFriendRequestDto(friendRequest));
+            String requestorName=playerRepository.findById(friendRequest.getRequestorId()).get().getName();
+            FriendRequestDto obj=dataMapper.MaptoFriendRequestDto(friendRequest);
+            obj.setRequestorName(requestorName);
+            mapped_friendRequests.add(obj);
         }
         return new ResponseEntity<>(mapped_friendRequests,HttpStatus.OK);
         
@@ -65,8 +72,13 @@ public class FriendRequestService {
         Player player=playerRepository.findById(friendRequest.getAcceptorId())
                 .orElseThrow(()->new PlayerNotFoundException("Player Not found in the database"));
         player.getFriends().add(friendRequest.getRequestorId());
+        Player playerReq=playerRepository.findById(friendRequest.getRequestorId())
+                .orElseThrow(()->new PlayerNotFoundException("Player Not found in the database"));
+        playerReq.getFriends().add(friendRequest.getAcceptorId());
         friendRequestRepository.save(friendRequest);
+      
         playerRepository.save(player);
+        playerRepository.save(playerReq);
         return new ResponseEntity<>(HttpStatus.OK);
         
     }

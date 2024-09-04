@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/friendRequest")
+@CrossOrigin(origins = "http://localhost:3000")
 public class FriendRequestController {
     
     @Autowired

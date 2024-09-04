@@ -32,10 +32,15 @@ public class PlayerController {
     public ResponseEntity<PlayerResponse> getPlayerById(@RequestParam String id){
         return playerService.getPlayerById(id);
     }
+    @PostMapping("/getFriendsById")
+    public ResponseEntity<List<PlayerResponse>> getFriendsById(@RequestParam String id){
+        return playerService.getFriendsById(id);
+    }
     
     @PostMapping("/addPlayer")
     public ResponseEntity<PlayerDto> addPlayer(@RequestBody PlayerDto playerDto){
         return playerService.addPlayer(playerDto);
     }
+    
     
 }
