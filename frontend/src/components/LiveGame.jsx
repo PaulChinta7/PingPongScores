@@ -67,7 +67,7 @@ const LiveGame = () => {
 
   return (
 <>
-{msg===''  ?(<div>
+{msg===''  ?(<div className='container'>
   <p>Live game</p>
     <p>{liveGame.player1} vs {liveGame.player2}</p>
     <p>{liveGame.player1Score} - <b>{liveGame.gamePoint}</b> -{liveGame.player2Score}</p>

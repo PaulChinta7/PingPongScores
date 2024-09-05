@@ -53,25 +53,28 @@ const Profile = () => {
   return (
     <>
     <div className='container py-5'>
-        <div className="row">
+        <div className="row ">
           
-            <div className="col p-0">
-              <div>Account details  </div>
-              <div>
-                <span>Username</span>
-                <span className='text-secondary'>{playerData.name}</span>
-                <span className='p-0'>Email</span>
-                <span  className='text-secondary'>{playerData.email}</span>
-                <div className='d-flex'>
-                <span className='p-0'>Won {playerData.gamesWon}</span> &ensp;
-                <span className='p-0'>Lost {playerData.gamesLost}</span>
+            <div className="col-md-6">
+              <div className='profile_accountDiv '>
+                <h4>Account details  </h4>
+                <span className='profile_label'>Username</span>
+                <span className='profile_playerName'>{playerData.name}</span>
+                <span  className='profile_label'>Email</span>
+                <span  className='profile_email'>{playerData.email}</span>
+                <span  className='profile_label'>Stats</span>
+                <div className='d-flex '>
+                  <span className='profile_gamesLost_label'>Won </span>
+                <span className='profile_gamesWon'>{playerData.gamesWon}</span> &ensp;
+                <span className='profile_gamesLost_label'>Lost </span>
+                <span className='profile_gamesLost'>{playerData.gamesLost}</span>
                 </div>
               </div>
               
             </div>
-            <div className="col">
-            <div>History</div>
-            {playerData.games.map(game=>(<Match key={game.id} game={game}/>))}
+            <div className="col-md-6">
+            <h4>History</h4>
+            {playerData.games.map(game=>(<Match key={game.id} game={game} className="py-4"/>))}
             </div>
         </div>
     </div>

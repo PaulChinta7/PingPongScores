@@ -73,11 +73,40 @@ const response= await fetch(`${apiUrl}/friendRequest/addFriend`,{
 
   return (
     <>
+    <div className="container">
     <p>Players</p>
     <input type="text" placeholder='search'/>
-    <ul>
+    {/* <ul>
+
         {players.map(player=>( <li key={player.id}>{player.name} |  {player.email} | Games Won :{player.gamesWon} | Games Lost : {player.gamesLost} | <button  className='btn btn-dark' onClick={()=>{handleAddFriend(player.id)}}>Add Friend</button></li> ))}
-    </ul>
+    </ul> */}
+
+    <table className="table table-striped table-dark defaultWidth">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Won</th>
+      <th scope="col">Lost</th>
+      <th scope="col"></th>
+      
+    </tr>
+  </thead>
+  <tbody>
+  {players.map(player=>(<tr key={player.id}>
+      <th scope="row">{player.name}</th>
+      <td>{player.email}</td>
+      <td>{player.gamesWon}</td>
+      <td>{player.gamesLost}</td>
+      <td>  <button  className='btn btn-dark' onClick={()=>{handleAddFriend(player.id)}}>Add friend</button></td>
+    </tr>  ))}
+    
+   
+  </tbody>
+</table>
+    </div>
+    
+
     
     </>
   )

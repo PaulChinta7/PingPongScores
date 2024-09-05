@@ -2,6 +2,7 @@ import React, {useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import LiveGame from './LiveGame';
 import { ListGroup} from 'react-bootstrap';
+import Search from './Search';
 
 const Game = () => {
   const apiUrl=process.env.REACT_APP_API_URL;
@@ -82,28 +83,54 @@ const handleGamePoint=(e)=>{
   return (<>
   <div className="container py-5">
    <div className="row">
-   <div className="col">
+   <div className="col-md-6">
     {flag? <LiveGame/>: <>
-    <div>Play Game</div>
-    <h4>Player: <span>{player2Name ? player2Name : <bold>Select a Friend to play</bold> }</span></h4>
+    <div className='PlayGame_div'>
+    <h4>Play Game</h4>
+    <p>Player:{player2Name ? player2Name :<>Select a Friend to play</>}</p>
     <select onChange={handleGamePoint}>
-    <option value="" disabled>Select Gamepoint</option>
+    <option value="" >Select Gamepoint</option>
       <option value="5">5</option>
       <option value="11">11</option>
       <option value="15">15</option>
       <option value="21">21</option>
     </select> <br />
     <button onClick={handleCreateGame} className='btn btn-dark'>Request Game</button>
+    </div>
     </>}
     </div>
-    <div className="col">
-      {/* <Friends/> */}
+    <div className="col-md-6">
+      <Search/>
 
 
-      <p>My friends</p>
-    <ListGroup >
-    {friends.map((friend)=>(    <ListGroup.Item key={friend.id} className='list-group-item'>{friend.name} <button className='btn btn-primary' onClick={()=>handleFriend(friend.id,friend.name)}>Select</button></ListGroup.Item> ))}
-    </ListGroup>
+      <h4>My friends</h4>
+
+      <table className="table table-striped table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Won</th>
+      <th scope="col">Lost</th>
+      <th scope="col">Win %</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  {friends.map((friend)=>(<tr key={friend.id}>
+      <th scope="row">{friend.name}</th>
+      <td>7</td>
+      <td>3</td>
+      <td>33.33</td>
+      <td>  <button className='btn btn-dark' onClick={()=>handleFriend(friend.id,friend.name)}>Select</button></td>
+    </tr>  ))}
+    
+   
+  </tbody>
+</table>
+
+   
+
+   
     </div>
    </div>
 
