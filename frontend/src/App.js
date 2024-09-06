@@ -12,11 +12,14 @@ import Notification from './components/Notification';
 import NavBar from './components/NavBar';
 
 function App() {
+  const sess=sessionStorage.getItem('id');
   return (
     <>
     <Router>
-      <NavBar/>
+      
 
+
+      <NavBar/>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />

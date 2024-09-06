@@ -78,7 +78,10 @@ const handleGamePoint=(e)=>{
           }
       })
       const data=await response.json();
-      
+      if(response.status===401){
+        navigate("/");
+      }
+      // console.log(data);
       setFriends(data);
     
       }
@@ -120,15 +123,17 @@ const handleGamePoint=(e)=>{
       <th scope="col">Won</th>
       <th scope="col">Lost</th>
       <th scope="col">Win %</th>
+      <th scope="col">Last 5</th>
       <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
   {friends.map((friend)=>(<tr key={friend.id}>
       <th scope="row">{friend.name}</th>
-      <td>7</td>
-      <td>3</td>
-      <td>33.33</td>
+      <td>{friend.gamesWon}</td>
+      <td>{friend.gamesLost}</td>
+      <td>{((friend.gamesWon/(friend.gamesWon+friend.gamesLost))*100).toFixed(2)}</td>
+      <td> <div className='Game_last5Div'> { friend.last5.map((item,index)=> item===1?<div key={index} className="Game_gameBubbleGreen">W</div>:item===-1?<div key={index} className="Game_gameBubbleGray">N</div>:<div key={index} className="Game_gameBubbleRed">L</div>)} </div></td>
       <td>  <button className='btn btn-dark' onClick={()=>handleFriend(friend.id,friend.name)}>Select</button></td>
     </tr>  ))}
     

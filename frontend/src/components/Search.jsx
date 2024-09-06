@@ -6,14 +6,15 @@ const Search = () => {
     const playerId=sessionStorage.getItem('id');
 
     const [players,setPlayers]=useState([]);
+    const [searchTerm,setSearchTerm]=useState("");
 
 
 
     const fetchPlayers= async ()=>{
 
         try{
-            const response= await fetch(`${apiUrl}/player/getPlayers`,{
-                method:'GET',
+            const response= await fetch(`${apiUrl}/player/search?playerId=`+playerId+`&searchTerm=`+searchTerm,{
+                method:'POST',
                 headers:{
                     'Authorization':`Bearer ${token}`,
                     'Content-Type':'application/json',
@@ -74,6 +75,9 @@ const response= await fetch(`${apiUrl}/friendRequest/addFriend`,{
   return (
     <>
     <div className="container">
+    { players.length===0?<p>No players found</p>:<>
+
+    
     <p>Players</p>
     <input type="text" placeholder='search'/>
     {/* <ul>
@@ -103,7 +107,7 @@ const response= await fetch(`${apiUrl}/friendRequest/addFriend`,{
     
    
   </tbody>
-</table>
+</table></>}
     </div>
     
 

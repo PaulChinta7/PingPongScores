@@ -75,36 +75,55 @@ body{
 .profile_accountDiv{
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
   padding: 0px auto;
+  border: solid 1px black;
+  border-radius: 20px;
 
 }
+.profile_center{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0px auto;
+  width: 70%;
+}
 
-
+.profile_stats{
+  padding: 5px 50px;
+}
+.profile_title{
+  padding: 5px;
+  display: flex;justify-content: center;
+}
 .profile_label{
   color: var(--bs-gray);
   font-size: var(--bs-sm-font-size);
+  padding: 5px 50px;
 }
 
 .profile_playerName{
   font-size: var(--bs-md-font-size);
+  padding: 0px 50px;
 }
 
 .profile_email{
   font-size: var(--bs-md-font-size);
+  padding: 0px 50px;
 }
 
-
 .profile_gamesLost_label{
-  font-size: var(--bs-md-font-size);
-  padding: 0px 5px;
+  font-size: var(--bs-sm-font-size);
+  /* padding: 0px 5px; */
   color: var(--bs-gray);
 }
 .profile_gamesWon{
   font-size: var(--bs-lg-font-size);
+  padding: 5px 5px;
 }
 .profile_gamesLost{
   font-size: var(--bs-lg-font-size);
+  padding: 5px 5px;
 }
 
 
@@ -148,3 +167,41 @@ body{
 }
 
 
+.Game_last5Div{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.Game_gameBubbleGreen{
+  background-color: greenyellow;
+  width: 20px;
+  height: 20px;
+  padding: 5px;
+  border-radius: 10px;
+  font-size: 10px;
+  color: black;
+  margin: 0px 2px;
+}
+
+.Game_gameBubbleGray{
+  background-color: gray;
+  width: 20px;
+  height: 20px;
+  padding: 5px;
+  border-radius: 10px;
+  font-size: 10px;
+  color: white;
+  margin: 0px 2px;
+}
+.Game_gameBubbleRed{
+  background-color: red;
+  width: 20px;
+  height: 20px;
+  padding: 5px;
+  border-radius: 10px;
+  font-size: 10px;
+  color: white;
+  margin: 0px 2px;
+}
