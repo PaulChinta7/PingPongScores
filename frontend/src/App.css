@@ -1,7 +1,8 @@
 :root{
   --bs-gray:#e7e7e7;
   --bs-sm-font-size:12px;
-  --bs-md-font-size:18px;
+  --bs-smd-font-size:14px;
+  --bs-md-font-size:20px;
   --bs-lg-font-size:24px;
 }
 
@@ -16,6 +17,53 @@ body{
   max-width: 500px;
 }
 
+.container{
+  max-width: 700px !important;
+}
+.LiveGame_div{
+ 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+.LiveGame_player1Name{
+  font-size: 50px;
+  padding: 0px 10px;
+}
+.LiveGame_vs{
+  font-size: 25px;
+  padding: 0px 10px;
+}
+
+.LiveGame_player2Name{
+  font-size: 50px;
+  padding: 0px 10px;
+}
+
+.LiveGame_player1Score{
+  font-size: 100px;
+  padding: 0px 10px;
+}
+.LiveGame_gamePoint{
+  font-size: 30px;
+  background-color: black;
+  color: white;
+  border-radius: 100px;
+  padding: 0px 10px;
+  
+}
+.LiveGame_player2Score{
+  font-size: 100px;
+  padding: 0px 10px;
+}
+.LiveGame_status{
+  font-size: 20px;
+}
+.Notification_requestMsg{
+  font-size: var(--bs-smd-font-size);
+}
 
 
 .PlayGame_div{
@@ -50,6 +98,7 @@ body{
 .profile_gamesLost_label{
   font-size: var(--bs-md-font-size);
   padding: 0px 5px;
+  color: var(--bs-gray);
 }
 .profile_gamesWon{
   font-size: var(--bs-lg-font-size);

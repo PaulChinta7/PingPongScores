@@ -23,68 +23,77 @@ const handleGamePoint=(e)=>{
   setGamePoint(e.target.value);
 }
   const handleCreateGame= async ()=>{
-    setFlag(true);  
-    try{
-      console.log(userId,player2Id,gamePoint);
-      const payload={"player1Id":userId,"player2Id":player2Id,"gamePoint":gamePoint};
-      const response=await fetch(`${apiUrl}/game/createGame`,{
-        method:'POST',
-        headers:{
-          'Content-Type': 'application/json',
-          'Authorization':`Bearer ${token}`,
-        },
-        body:JSON.stringify(payload)
-        
-      })
-      
-      const gameid=await response.text();
-      sessionStorage.setItem('gameId',gameid);
-      console.log(gameid);
-      navigate("/live");
-      if(!response.ok){
-        throw new Error("Error");
-      }
-
-      
-
+    if(player2Id===""){
+      alert("Choose a player to play with");
     }
-    catch(error){
-      console.log(error);
+    else if(gamePoint===''){
+      alert("choose a gamepoint");
+    }
+    else{
+
+      setFlag(true);  
+      try{
+        console.log(userId,player2Id,gamePoint);
+        const payload={"player1Id":userId,"player2Id":player2Id,"gamePoint":gamePoint};
+        const response=await fetch(`${apiUrl}/game/createGame`,{
+          method:'POST',
+          headers:{
+            'Content-Type': 'application/json',
+            'Authorization':`Bearer ${token}`,
+          },
+          body:JSON.stringify(payload)
+          
+        })
+        
+        const gameid=await response.text();
+        sessionStorage.setItem('gameId',gameid);
+        console.log(gameid);
+        navigate("/live");
+        if(!response.ok){
+          throw new Error("Error");
+        }
+  
+        
+  
+      }
+      catch(error){
+        console.log(error);
+      }
     }
 
   }
 
 
-  // const [searchTerm,setSearchTerm]=useState('');
   const [friends,setFriends]=useState([]);
   const id=sessionStorage.getItem('id');
-  const handleFriends= async ()=>{
-    try{
-      const response= await fetch(`${apiUrl}/player/getFriendsById?id=`+id,{
-        method:'POST',
-        headers:{
-            'Authorization':`Bearer ${token}`,
-            'Content-Type':'application/json',
-        }
-    })
-    const data=await response.json();
-    setFriends(data);
-  
-    }
-    catch(error){
-      console.log(error);
-    }
-  }
+ 
   useEffect(()=>{
+    const handleFriends= async ()=>{
+      try{
+        const response= await fetch(`${apiUrl}/player/getFriendsById?id=`+id,{
+          method:'POST',
+          headers:{
+              'Authorization':`Bearer ${token}`,
+              'Content-Type':'application/json',
+          }
+      })
+      const data=await response.json();
+      
+      setFriends(data);
+    
+      }
+      catch(error){
+        console.log(error);
+      }
+    }
     handleFriends();
-  })
+  },[])
   
 
   return (<>
   <div className="container py-5">
    <div className="row">
    <div className="col-md-6">
-    {flag? <LiveGame/>: <>
     <div className='PlayGame_div'>
     <h4>Play Game</h4>
     <p>Player:{player2Name ? player2Name :<>Select a Friend to play</>}</p>
@@ -97,10 +106,9 @@ const handleGamePoint=(e)=>{
     </select> <br />
     <button onClick={handleCreateGame} className='btn btn-dark'>Request Game</button>
     </div>
-    </>}
     </div>
     <div className="col-md-6">
-      <Search/>
+      
 
 
       <h4>My friends</h4>

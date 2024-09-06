@@ -62,12 +62,15 @@ const Profile = () => {
                 <span className='profile_playerName'>{playerData.name}</span>
                 <span  className='profile_label'>Email</span>
                 <span  className='profile_email'>{playerData.email}</span>
-                <span  className='profile_label'>Stats</span>
+                {/* <span  className='profile_label'>Stats</span> */}
                 <div className='d-flex '>
-                  <span className='profile_gamesLost_label'>Won </span>
-                <span className='profile_gamesWon'>{playerData.gamesWon}</span> &ensp;
-                <span className='profile_gamesLost_label'>Lost </span>
-                <span className='profile_gamesLost'>{playerData.gamesLost}</span>
+                <span className='profile_gamesLost_label d-flex justify-content-center align-items-center'>Won </span>
+                <span className='profile_gamesWon d-flex justify-content-center align-items-center'>{playerData.gamesWon}</span> &ensp;
+                  
+                </div>
+                <div className="d-flex">
+                <span className='profile_gamesLost_label d-flex justify-content-center align-items-center'>Lost </span>
+                <span className='profile_gamesLost d-flex justify-content-center align-items-center'>{playerData.gamesLost}</span>
                 </div>
               </div>
               
