@@ -1,7 +1,6 @@
 package com.dev.pingpong.backend.service;
 
 import com.dev.pingpong.backend.Mapper.DataMapper;
-import com.dev.pingpong.backend.dto.GameDto;
 import com.dev.pingpong.backend.dto.GameRequest;
 import com.dev.pingpong.backend.dto.GameResponse;
 import com.dev.pingpong.backend.exception.GameCompletedException;
@@ -18,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class GameService {
@@ -77,6 +77,7 @@ public class GameService {
                 }
                 if(game.get().getPlayer1Score()==game.get().getGamePoint()){
                     game.get().setStatus("COMPLETED");
+                    game.get().setWinner(game.get().getPlayer1Id());
                     Player player1=playerRepository.findById(game.get().getPlayer1Id()).get();
                     Player player2=playerRepository.findById(game.get().getPlayer2Id()).get();
                     player1.setGamesWon(player1.getGamesWon()+1);
@@ -87,6 +88,7 @@ public class GameService {
                 }
                 else if(  game.get().getPlayer2Score()==game.get().getGamePoint()){
                     game.get().setStatus("COMPLETED");
+                    game.get().setWinner(game.get().getPlayer2Id());
                     Player player1=playerRepository.findById(game.get().getPlayer1Id()).get();
                     Player player2=playerRepository.findById(game.get().getPlayer2Id()).get();
                     player2.setGamesWon(player2.getGamesWon()+1);
@@ -153,5 +155,15 @@ public class GameService {
 
 
 
+    }
+
+    public List<Game> getLast5GamesByPlayer(String friendId) {
+        List<Game> records = gameRepository.findByPlayer(friendId);
+
+        // Sort by _id in descending order and limit to the last 5 records
+        return records.stream()
+                .sorted((e1, e2) -> e2.getId().compareTo(e1.getId())) // Assuming `getId()` returns `_id`
+                .limit(5)
+                .collect(Collectors.toList());
     }
 }

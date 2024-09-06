@@ -1,6 +1,7 @@
 package com.dev.pingpong.backend.controller;
 
 
+import com.dev.pingpong.backend.dto.FriendsResponse;
 import com.dev.pingpong.backend.dto.PlayerDto;
 import com.dev.pingpong.backend.dto.PlayerResponse;
 import com.dev.pingpong.backend.model.Player;
@@ -33,13 +34,18 @@ public class PlayerController {
         return playerService.getPlayerById(id);
     }
     @PostMapping("/getFriendsById")
-    public ResponseEntity<List<PlayerResponse>> getFriendsById(@RequestParam String id){
+    public ResponseEntity<List<FriendsResponse>> getFriendsById(@RequestParam String id){
         return playerService.getFriendsById(id);
     }
     
     @PostMapping("/addPlayer")
     public ResponseEntity<PlayerDto> addPlayer(@RequestBody PlayerDto playerDto){
         return playerService.addPlayer(playerDto);
+    }
+    
+    @PostMapping("/search")
+    public ResponseEntity<List<PlayerResponse>> search(@RequestParam String playerId,@RequestParam String searchTerm){
+        return playerService.search(playerId,searchTerm);
     }
     
     

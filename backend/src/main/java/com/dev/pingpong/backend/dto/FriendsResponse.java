@@ -10,13 +10,13 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PlayerResponse {
+public class FriendsResponse {
     private String id;
     private String name;
     private String email;
-    private int gamesWon;   
+    private int gamesWon;
     private int gamesLost;
-    private List<GameResponse> games;
+    private List<Integer> last5;
     private List<String> friends;
-    
+
 }

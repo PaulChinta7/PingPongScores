@@ -16,6 +16,7 @@ public class DataMapper {
                 .player2Id(gameRequest.getPlayer2Id())
                 .player1Score(0)
                 .player2Score(0)
+                .winner("")
                 .gamePoint(gameRequest.getGamePoint())
                 .status("LIVE")
                 .build();
@@ -29,6 +30,7 @@ public class DataMapper {
                 .player2Id(game.getPlayer2Id())
                 .player1Score(0)
                 .player2Score(0)
+                
                 .gamePoint(game.getGamePoint())
                 .status("LIVE")
                 .build();
@@ -86,4 +88,17 @@ public class DataMapper {
                 .status(friendRequest.getStatus())
                 .build();
     }
+
+    public FriendsResponse MaptoFriendsResponse(Player player) {
+        return FriendsResponse.builder().id(player.getId())
+                .name(player.getName())
+                .email(player.getEmail())
+                .gamesWon(player.getGamesWon())
+                .gamesLost(player.getGamesLost())
+                .friends(player.getFriends())
+                .build();
+
+
+    }
+
 }

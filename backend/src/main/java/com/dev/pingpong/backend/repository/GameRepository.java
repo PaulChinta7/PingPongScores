@@ -14,4 +14,6 @@ public interface GameRepository extends MongoRepository<Game,String> {
 
     @Query("{ '$or': [ { 'player1Id': ?0 }, { 'player2Id': ?0 } ] }")
     List<Game> findByPlayer(String playerId);
+
+    
 }

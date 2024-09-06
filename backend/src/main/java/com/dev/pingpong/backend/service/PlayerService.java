@@ -3,6 +3,7 @@ package com.dev.pingpong.backend.service;
 import com.dev.pingpong.backend.Mapper.DataMapper;
 import com.dev.pingpong.backend.dto.*;
 import com.dev.pingpong.backend.exception.PlayerNotFoundException;
+import com.dev.pingpong.backend.model.Game;
 import com.dev.pingpong.backend.model.Player;
 import com.dev.pingpong.backend.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,15 +87,52 @@ public class PlayerService {
         return new ResponseEntity<>(mapped_playerResponse,HttpStatus.OK);
     }
     
-    public ResponseEntity<List<PlayerResponse>> getFriendsById(String id){
+    public ResponseEntity<List<FriendsResponse>> getFriendsById(String id){
         Player fetched_player=playerRepository.findById(id)
                 .orElseThrow(()->new PlayerNotFoundException("Player Not found in the database"));
-        List<PlayerResponse> friends=new ArrayList<>();
+        List<FriendsResponse> friends=new ArrayList<>();
         for(String friend_id: fetched_player.getFriends()){
-            friends.add(dataMapper.MaptoPlayerResponse(playerRepository.findById(friend_id).get()));
+            List<Integer> last5=calculateLast5(friend_id);
+            FriendsResponse friendsResponse=dataMapper.MaptoFriendsResponse(playerRepository.findById(friend_id).get());
+            friendsResponse.setLast5(last5);
+            friends.add(friendsResponse);
         }
         return new ResponseEntity<>(friends,HttpStatus.OK);
         
     }
+
+    private List<Integer> calculateLast5(String friendId) {
+        List<Game> fetched_games=gameService.getLast5GamesByPlayer(friendId);
+        List<Integer> last5=new ArrayList<>();
+        for(Game game :fetched_games){
+            if(game.getWinner().equals(friendId)){
+                last5.add(1);
+            }
+            else{
+                last5.add(0);
+            }
+        }
+        while(last5.toArray().length<5){
+            last5.add(-1);
+        }
+        return last5;
+    }
+    public ResponseEntity<List<PlayerResponse>> search(String playerId,String searchTerm){
+        List <String> friends=playerRepository.findById(playerId).get().getFriends();
+        List<Player> players=playerRepository.findAll();
+        List<PlayerResponse> result=new ArrayList<>();
+        for(Player player :players){
+            if(!friends.contains(player.getId())) {
+                if(!player.getId().equals(playerId)){
+                result.add(dataMapper.MaptoPlayerResponse(player));
+                }
+            }
+            
+        }
+        
+        return new ResponseEntity<>(result,HttpStatus.OK);
+        
+    }
     
+
 }

@@ -18,6 +18,7 @@ public class Game {
     private String player2Id;
     private int player1Score;
     private int player2Score;
+    private String winner;
     private int gamePoint;
     private String status;
     
