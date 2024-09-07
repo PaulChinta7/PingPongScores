@@ -17,6 +17,7 @@ public class PlayerResponse {
     private int gamesWon;   
     private int gamesLost;
     private List<GameResponse> games;
+    private List<Integer> last10;
     private List<String> friends;
     
 }

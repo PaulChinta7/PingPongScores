@@ -157,13 +157,13 @@ public class GameService {
 
     }
 
-    public List<Game> getLast5GamesByPlayer(String friendId) {
+    public List<Game> getLast5GamesByPlayer(String friendId,Integer maxSize) {
         List<Game> records = gameRepository.findByPlayer(friendId);
 
         // Sort by _id in descending order and limit to the last 5 records
         return records.stream()
                 .sorted((e1, e2) -> e2.getId().compareTo(e1.getId())) // Assuming `getId()` returns `_id`
-                .limit(5)
+                .limit(maxSize)
                 .collect(Collectors.toList());
     }
 }

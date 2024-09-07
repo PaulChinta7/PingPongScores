@@ -84,6 +84,8 @@ public class PlayerService {
         PlayerResponse mapped_playerResponse=dataMapper.MaptoPlayerResponse(fetched_player);
         List<GameResponse> fetched_games=gameService.getGamesByPlayer(id).getBody();
         mapped_playerResponse.setGames(fetched_games);
+        List<Integer> last5=calculateLast5(id,10);
+        mapped_playerResponse.setLast10(last5);
         return new ResponseEntity<>(mapped_playerResponse,HttpStatus.OK);
     }
     
@@ -92,17 +94,17 @@ public class PlayerService {
                 .orElseThrow(()->new PlayerNotFoundException("Player Not found in the database"));
         List<FriendsResponse> friends=new ArrayList<>();
         for(String friend_id: fetched_player.getFriends()){
-            List<Integer> last5=calculateLast5(friend_id);
+            List<Integer> last10=calculateLast5(friend_id,5);
             FriendsResponse friendsResponse=dataMapper.MaptoFriendsResponse(playerRepository.findById(friend_id).get());
-            friendsResponse.setLast5(last5);
+            friendsResponse.setLast5(last10);
             friends.add(friendsResponse);
         }
         return new ResponseEntity<>(friends,HttpStatus.OK);
         
     }
 
-    private List<Integer> calculateLast5(String friendId) {
-        List<Game> fetched_games=gameService.getLast5GamesByPlayer(friendId);
+    private List<Integer> calculateLast5(String friendId,Integer maxSize) {
+        List<Game> fetched_games=gameService.getLast5GamesByPlayer(friendId,maxSize);
         List<Integer> last5=new ArrayList<>();
         for(Game game :fetched_games){
             if(game.getWinner().equals(friendId)){
@@ -112,11 +114,12 @@ public class PlayerService {
                 last5.add(0);
             }
         }
-        while(last5.toArray().length<5){
+        while(last5.toArray().length<maxSize){
             last5.add(-1);
         }
         return last5;
     }
+    
     public ResponseEntity<List<PlayerResponse>> search(String playerId,String searchTerm){
         List <String> friends=playerRepository.findById(playerId).get().getFriends();
         List<Player> players=playerRepository.findAll();
