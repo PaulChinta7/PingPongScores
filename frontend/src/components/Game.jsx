@@ -1,8 +1,5 @@
 import React, {useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import LiveGame from './LiveGame';
-import { ListGroup} from 'react-bootstrap';
-import Search from './Search';
 
 const Game = () => {
   const apiUrl=process.env.REACT_APP_API_URL;
@@ -47,7 +44,7 @@ const handleGamePoint=(e)=>{
         
         const gameid=await response.text();
         sessionStorage.setItem('gameId',gameid);
-        console.log(gameid);
+        // console.log(gameid);
         navigate("/live");
         if(!response.ok){
           throw new Error("Error");
@@ -96,10 +93,10 @@ const handleGamePoint=(e)=>{
   return (<>
   <div className="container py-5">
    <div className="row">
-   <div className="col-md-6">
+   <div className="col-lg-6">
     <div className='PlayGame_div'>
     <h4>Play Game</h4>
-    <p>Player:{player2Name ? player2Name :<>Select a Friend to play</>}</p>
+    <div className='Game_playerDiv'> <span className='Game_playerSubtitle'>Player:</span> <span className='Game_player'> {player2Name ? player2Name.toUpperCase() :<>Select a Friend to play</>}</span></div>
     <select onChange={handleGamePoint}>
     <option value="" >Select Gamepoint</option>
       <option value="5">5</option>
@@ -110,36 +107,36 @@ const handleGamePoint=(e)=>{
     <button onClick={handleCreateGame} className='btn btn-dark'>Request Game</button>
     </div>
     </div>
-    <div className="col-md-6">
+    <div className="col-lg-6">
       
 
 
       <h4>My friends</h4>
-
+{friends.length===0? <p className='Game_noMatch'>No friends yet. Search for friends to play!</p> :
       <table className="table table-striped table-dark">
   <thead>
     <tr>
       <th scope="col">Name</th>
       <th scope="col">Won</th>
       <th scope="col">Lost</th>
-      <th scope="col">Win %</th>
+      <th scope="col" className='Game_winPercentage'>Win %</th>
       <th scope="col">Last 5</th>
       <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
   {friends.map((friend)=>(<tr key={friend.id}>
-      <th scope="row">{friend.name}</th>
+      <th scope="row">{friend.name.toUpperCase()}</th>
       <td>{friend.gamesWon}</td>
       <td>{friend.gamesLost}</td>
-      <td>{((friend.gamesWon/(friend.gamesWon+friend.gamesLost))*100).toFixed(2)}</td>
+      <td  className='Game_winPercentage'>{(friend.gamesWon+friend.gamesLost)===0?0:((friend.gamesWon/(friend.gamesWon+friend.gamesLost))*100).toFixed(2)}</td>
       <td> <div className='Game_last5Div'> { friend.last5.map((item,index)=> item===1?<div key={index} className="Game_gameBubbleGreen">W</div>:item===-1?<div key={index} className="Game_gameBubbleGray">N</div>:<div key={index} className="Game_gameBubbleRed">L</div>)} </div></td>
-      <td>  <button className='btn btn-dark' onClick={()=>handleFriend(friend.id,friend.name)}>Select</button></td>
+      <td>  <button className='btn btn-dark btn12' onClick={()=>handleFriend(friend.id,friend.name)}>Select</button></td>
     </tr>  ))}
     
    
   </tbody>
-</table>
+</table>}
 
    
 

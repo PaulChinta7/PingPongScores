@@ -39,7 +39,7 @@ const LiveGame = () => {
                 }
             })
             if(response.ok){
-                console.log("incremented"+playerId);
+                // console.log("incremented"+playerId);
             }
 
         }

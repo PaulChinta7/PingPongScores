@@ -1,25 +1,28 @@
 import React from 'react'
-import { Button, NavDropdown } from 'react-bootstrap';
+import {  NavDropdown } from 'react-bootstrap';
 
-import Container from 'react-bootstrap/Container';
+
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Notification from './Notification';
-import { Form } from 'react-router-dom';
+import IMG from '../ttlogo.png'
 import Search from './Search';
 
 const NavBar = () => {
   return (
     <>
+  
 
-<Navbar expand="lg" className="bg-body-tertiary" data-bs-theme="dark">
-      <Container>
-        <Navbar.Brand href="#home">Table Tennis</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="/profile">Profile</Nav.Link>
+<Navbar expand="sm" className="Navbar_navbar bg-body-tertiary ">
+
+        <Navbar.Brand className='Navbar_brand'><img src={IMG} alt="Logo" className='Navbar_logo' /></Navbar.Brand>
+
+
+        <Navbar.Toggle aria-controls="basic-navbar-nav" className='Navbar_collapse'/>
+        <Navbar.Collapse id="basic-navbar-nav" >
+          <Nav className="Navbar_navlinks">
             <Nav.Link href="/home">How to Play</Nav.Link>
+            <Nav.Link href="/profile">Profile</Nav.Link>
             <Nav.Link href="/game">Game</Nav.Link>
             
             <NavDropdown title="Notifications" id="basic-nav-dropdown">
@@ -33,8 +36,11 @@ const NavBar = () => {
             
           </Nav>
         </Navbar.Collapse>
-      </Container>
+      
     </Navbar>
+
+
+    
     </>
   )
 }

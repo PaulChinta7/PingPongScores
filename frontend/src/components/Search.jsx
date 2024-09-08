@@ -74,26 +74,16 @@ const response= await fetch(`${apiUrl}/friendRequest/addFriend`,{
 
   return (
     <>
-    <div className="container">
+    <div className="container Navbar_dropdown">
     { players.length===0?<p>No players found</p>:<>
-
-    
-    <p>Players</p>
-    <input type="text" placeholder='search'/>
-    {/* <ul>
-
-        {players.map(player=>( <li key={player.id}>{player.name} |  {player.email} | Games Won :{player.gamesWon} | Games Lost : {player.gamesLost} | <button  className='btn btn-dark' onClick={()=>{handleAddFriend(player.id)}}>Add Friend</button></li> ))}
-    </ul> */}
-
-    <table className="table table-striped table-dark defaultWidth">
+    <table className="table">
   <thead>
     <tr>
       <th scope="col">Name</th>
       <th scope="col">Email</th>
       <th scope="col">Won</th>
       <th scope="col">Lost</th>
-      <th scope="col"></th>
-      
+      <th scope="col"></th>   
     </tr>
   </thead>
   <tbody>
@@ -102,7 +92,7 @@ const response= await fetch(`${apiUrl}/friendRequest/addFriend`,{
       <td>{player.email}</td>
       <td>{player.gamesWon}</td>
       <td>{player.gamesLost}</td>
-      <td>  <button  className='btn btn-dark' onClick={()=>{handleAddFriend(player.id)}}>Add friend</button></td>
+      <td>  <button  className='btn btn-dark btn12 width80' onClick={()=>{handleAddFriend(player.id)}}>Add friend</button></td>
     </tr>  ))}
     
    

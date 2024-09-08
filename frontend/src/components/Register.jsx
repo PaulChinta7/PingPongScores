@@ -10,6 +10,10 @@ const Register = () => {
     const navigate=useNavigate();
     const apiUrl=process.env.REACT_APP_API_URL
     const handleRegister=async()=>{
+      if(name==="" || email==="" || password==="" || confirmPassword===""){
+        alert("Fill in all entries");
+      }
+      else{
         const payload={'name':name,'email':email,'password':password};
         try{
             const response=await fetch(`${apiUrl}/new/register`,{
@@ -26,13 +30,15 @@ const Register = () => {
         catch(error){
             console.log(error);
         }
+      }
 
     }
   return (
-    <div className='container'>
-    
- 
-  <div className="col-md-4">
+    <div className='container defaultWidthRegister py-3'>
+    <p>Register</p>
+ <div className="row">
+
+  <div className="col-lg-6">
     <label  className="form-label">Username</label>
     <div className="input-group has-validation">
       <span className="input-group-text" >@</span>
@@ -42,38 +48,34 @@ const Register = () => {
       </div>
     </div>
   </div>
-  <div className="col-md-4">
+  <div className="col-lg-6">
     <label className="form-label">Email</label>
     <input type="text" className="form-control" onChange={(e)=>{setEmail(e.target.value)}}  required/>
     <div className="valid-feedback">
       Looks good!
     </div>
   </div>
-  <div className="col-md-4">
+  <div className="col-lg-6">
     <label className="form-label">Password</label>
     <input type="password" className="form-control" onChange={(e)=>{setPassword(e.target.value)}}  required/>
     <div className="valid-feedback">
       Looks good!
     </div>
   </div>
-  <div className="col-md-4">
+  <div className="col-lg-6">
     <label className="form-label">Confirm Password</label>
     <input type="password" className="form-control" onChange={(e)=>{setConfirmPassword(e.target.value)}} required/>
     <div className="valid-feedback">
       Looks good!
     </div>
   </div>
+  <div className="d-flex justify-content-center py-2">
 
-  <div className="col-12">
-    <button className="btn btn-primary" onClick={handleRegister}>Submit form</button>
+    <button className="btn btn-dark" onClick={handleRegister}>Register</button>
   </div>
-        
-        {/* <p>username</p> <input type="text" onChange={(e)=>{setName(e.target.value)}} />
-    <p>email</p><input type="text" onChange={(e)=>{setEmail(e.target.value)}}/>
-    <p>passwords</p><input type="password" onChange={(e)=>{setPassword(e.target.value)}}/>
-    <p>confirm password</p><input type="password" onChange={(e)=>{setConfirmPassword(e.target.value)}}/>
-    <br />
-    <button onClick={handleRegister}>Sign up</button> */}
+ </div>
+
+
     </div>
 
   )

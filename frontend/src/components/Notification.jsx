@@ -54,9 +54,10 @@ const Notification = () => {
 
   return (
     <>
-      <NavDropdown.Item>
+    
+      <NavDropdown.Item className='Navbar_dropdown'>
       
-    {requests.length===0?<p>No Notifications</p>:requests.map(request=>( <div key={request.id}> <p className='Notification_requestMsg'> {request.requestorName} has requested to be your friend  </p> <button className='btn btn-sm btn-dark' onClick={()=>{handleAcceptFriend(request.id)}}>Accept</button> <button className='btn btn-sm btn-dark' >Reject</button><NavDropdown.Divider /> </div> ))}
+    {requests.length===0?<p>No Notifications</p>:requests.map(request=>( <div key={request.id} className='Notification_notif'> <p className='Notification_requestMsg'> {request.requestorName} has requested to be your friend  </p> <button className='btn btn-sm btn-dark btn12' onClick={()=>{handleAcceptFriend(request.id)}}>Accept</button> <button className='btn btn-sm btn-dark btn12' >Reject</button><NavDropdown.Divider /> </div> ))}
       </NavDropdown.Item>
     </>
   )
