@@ -3,6 +3,8 @@ package com.dev.pingpong.backend.dto;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @Getter
@@ -19,6 +21,7 @@ public class GameResponse {
     private int player2Score;
     private int gamePoint;
     private String status;
+    private LocalDateTime gameDate;
 
     
 }

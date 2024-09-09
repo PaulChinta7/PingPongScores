@@ -22,7 +22,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Player user=playerRepository.findByName(username);
+//        Player user=playerRepository.findByName(username);
+        Player user=playerRepository.findByEmail(username);
        if(user==null){
            throw new PlayerNotFoundException("User not found in the database");
        }

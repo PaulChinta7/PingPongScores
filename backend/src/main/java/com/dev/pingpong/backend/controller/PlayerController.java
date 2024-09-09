@@ -4,8 +4,7 @@ package com.dev.pingpong.backend.controller;
 import com.dev.pingpong.backend.dto.FriendsResponse;
 import com.dev.pingpong.backend.dto.PlayerDto;
 import com.dev.pingpong.backend.dto.PlayerResponse;
-import com.dev.pingpong.backend.model.Player;
-import com.dev.pingpong.backend.repository.PlayerRepository;
+import com.dev.pingpong.backend.dto.PlayerSearchResponse;
 import com.dev.pingpong.backend.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/player")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000","http://192.168.1.150:3000/"})
 public class PlayerController {
     
     
@@ -44,7 +43,7 @@ public class PlayerController {
     }
     
     @PostMapping("/search")
-    public ResponseEntity<List<PlayerResponse>> search(@RequestParam String playerId,@RequestParam String searchTerm){
+    public ResponseEntity<List<PlayerSearchResponse>> search(@RequestParam String playerId, @RequestParam String searchTerm){
         return playerService.search(playerId,searchTerm);
     }
     

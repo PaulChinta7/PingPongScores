@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/friendRequest")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000","http://192.168.1.150:3000/"})
 public class FriendRequestController {
     
     @Autowired
@@ -33,6 +33,10 @@ public class FriendRequestController {
     @PostMapping("/acceptFriend")
     public ResponseEntity<Void> acceptFriend(@RequestParam String friendRequestId){
         return friendRequestService.acceptRequest(friendRequestId);
+    }
+    @PostMapping("/rejectFriend")
+    public ResponseEntity<Void> rejectFriend(@RequestParam String friendRequestId){
+        return friendRequestService.rejectRequest(friendRequestId);
     }
     
 }

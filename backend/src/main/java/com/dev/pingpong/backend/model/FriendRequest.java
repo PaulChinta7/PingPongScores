@@ -2,7 +2,10 @@ package com.dev.pingpong.backend.model;
 
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDateTime;
 
 @Document(value = "FriendRequest")
 @Getter
@@ -15,4 +18,8 @@ public class FriendRequest {
     private String requestorId;
     private String acceptorId;
     private String status;
+
+    @CreatedDate
+    private LocalDateTime requestDate;
+
 }

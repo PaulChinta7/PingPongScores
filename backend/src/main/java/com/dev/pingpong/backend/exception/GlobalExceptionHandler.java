@@ -42,4 +42,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ErrorResponse.builder().msg(ex.getMessage()).status(HttpStatus.ALREADY_REPORTED.value()).build(), HttpStatus.ALREADY_REPORTED);
 
     }
+    @ExceptionHandler(EmailAlreadyExistException.class)
+    @ResponseBody
+    public ResponseEntity<ErrorResponse> handleEmailAlreadyExistException(EmailAlreadyExistException ex){
+        return new ResponseEntity<>(ErrorResponse.builder().msg(ex.getMessage()).status(HttpStatus.ALREADY_REPORTED.value()).build(), HttpStatus.ALREADY_REPORTED);
+
+    }
 }

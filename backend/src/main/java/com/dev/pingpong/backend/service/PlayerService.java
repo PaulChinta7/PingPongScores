@@ -2,9 +2,12 @@ package com.dev.pingpong.backend.service;
 
 import com.dev.pingpong.backend.Mapper.DataMapper;
 import com.dev.pingpong.backend.dto.*;
+import com.dev.pingpong.backend.exception.EmailAlreadyExistException;
 import com.dev.pingpong.backend.exception.PlayerNotFoundException;
+import com.dev.pingpong.backend.model.FriendRequest;
 import com.dev.pingpong.backend.model.Game;
 import com.dev.pingpong.backend.model.Player;
+import com.dev.pingpong.backend.repository.FriendRequestRepository;
 import com.dev.pingpong.backend.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -36,6 +40,10 @@ public class PlayerService {
     JWTService jwtService;
     @Autowired
     DataMapper dataMapper;
+    
+    @Autowired
+    FriendRequestRepository friendRequestRepository;
+    
     public ResponseEntity<List<PlayerResponse>> getPlayers() {
         List<Player> fetchedPlayers=playerRepository.findAll();
         List<PlayerResponse> mappedPlayers=new ArrayList<>();
@@ -45,8 +53,12 @@ public class PlayerService {
     }
     
     
-//    shouldnt allow duplicate users
+
     public ResponseEntity<PlayerDto> addPlayer(PlayerDto playerDto) {
+        Optional<Player> existingPlayer=playerRepository.EmailExists(playerDto.getEmail());
+        if(existingPlayer.isPresent()){
+            throw new EmailAlreadyExistException("Email already exist in the database");
+        }
         playerDto.setGamesWon(0);
         playerDto.setGamesLost(0);
         playerDto.setFriends(new ArrayList<>());
@@ -61,12 +73,12 @@ public class PlayerService {
         Authentication authentication=
                 authenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken(
-                                user.getName()
+                                user.getEmail()
                                 ,user.getPassword()));
         if( authentication.isAuthenticated()){
             return JwtResponse.builder()
-                    .token(jwtService.generateToken(user.getName()))
-                    .id(playerRepository.findByName(user.getName()).getId())
+                    .token(jwtService.generateToken(user.getEmail()))
+                    .id(playerRepository.findByEmail(user.getEmail()).getId())
                     .status(207).build();
         }
         else{
@@ -120,14 +132,22 @@ public class PlayerService {
         return last5;
     }
     
-    public ResponseEntity<List<PlayerResponse>> search(String playerId,String searchTerm){
+    public ResponseEntity<List<PlayerSearchResponse>> search(String playerId,String searchTerm){
         List <String> friends=playerRepository.findById(playerId).get().getFriends();
         List<Player> players=playerRepository.findAll();
-        List<PlayerResponse> result=new ArrayList<>();
+        List<PlayerSearchResponse> result=new ArrayList<>();
         for(Player player :players){
             if(!friends.contains(player.getId())) {
                 if(!player.getId().equals(playerId)){
-                result.add(dataMapper.MaptoPlayerResponse(player));
+                    PlayerSearchResponse x=dataMapper.MaptoPlayerSearchResponse(player);
+                    Optional<FriendRequest> friendRequest=friendRequestRepository.findRequest(playerId,player.getId());
+                    if(friendRequest.isPresent()){
+                            x.setRequested(friendRequest.get().getStatus().equals("PENDING"));
+                    }
+                    else{
+                    x.setRequested(false);
+                    }
+                result.add(x);
                 }
             }
             

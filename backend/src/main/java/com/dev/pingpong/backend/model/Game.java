@@ -2,8 +2,11 @@ package com.dev.pingpong.backend.model;
 
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDateTime;
 
 @Document(value = "Game")
 @Getter
@@ -21,5 +24,9 @@ public class Game {
     private String winner;
     private int gamePoint;
     private String status;
+
+
+    @CreatedDate
+    private LocalDateTime gameDate;
     
 }

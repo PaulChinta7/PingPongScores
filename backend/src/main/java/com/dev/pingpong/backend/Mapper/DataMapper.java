@@ -30,7 +30,7 @@ public class DataMapper {
                 .player2Id(game.getPlayer2Id())
                 .player1Score(0)
                 .player2Score(0)
-                
+                .gameDate(game.getGameDate())
                 .gamePoint(game.getGamePoint())
                 .status("LIVE")
                 .build();
@@ -50,6 +50,17 @@ public class DataMapper {
     }
     public PlayerResponse MaptoPlayerResponse(Player player) {
         return PlayerResponse.builder().id(player.getId())
+                .name(player.getName())
+                .email(player.getEmail())
+                .gamesWon(player.getGamesWon())
+                .gamesLost(player.getGamesLost())
+                .friends(player.getFriends())
+                .build();
+
+
+    }
+    public PlayerSearchResponse MaptoPlayerSearchResponse(Player player) {
+        return PlayerSearchResponse.builder().id(player.getId())
                 .name(player.getName())
                 .email(player.getEmail())
                 .gamesWon(player.getGamesWon())
@@ -86,6 +97,7 @@ public class DataMapper {
                 .acceptorId(friendRequest.getAcceptorId())
                 .requestorId(friendRequest.getRequestorId())
                 .status(friendRequest.getStatus())
+                .requestDate(friendRequest.getRequestDate())
                 .build();
     }
 

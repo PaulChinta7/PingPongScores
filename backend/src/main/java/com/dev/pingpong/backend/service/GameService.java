@@ -49,6 +49,7 @@ public class GameService {
                      .player2Score(game.getPlayer2Score())
                      .gamePoint(game.getGamePoint())
                      .status(game.getStatus())
+                     .gameDate(game.getGameDate())
                      .build());
          }
         
@@ -74,6 +75,9 @@ public class GameService {
                 } else if (playerId.equals(game.get().getPlayer2Id()) && game.get().getPlayer2Score() < game.get().getGamePoint()) {
                     game.get().setPlayer2Score(game.get().getPlayer2Score() + 1);
 
+                }
+                if(game.get().getPlayer1Score()==game.get().getPlayer2Score()&& game.get().getPlayer1Score()==game.get().getGamePoint()-1){
+                    game.get().setGamePoint(game.get().getGamePoint()+1);
                 }
                 if(game.get().getPlayer1Score()==game.get().getGamePoint()){
                     game.get().setStatus("COMPLETED");
@@ -129,6 +133,7 @@ public class GameService {
                     .player2Score(game.getPlayer2Score())
                     .gamePoint(game.getGamePoint())
                     .status(game.getStatus())
+                            .gameDate(game.getGameDate())
                     .build());
         }
             return new ResponseEntity<>(mappedGames,HttpStatus.OK);
@@ -149,6 +154,7 @@ public class GameService {
                 .player2(player2Name)
                 .player2Score(game.getPlayer2Score())
                 .gamePoint(game.getGamePoint())
+                .gameDate(game.getGameDate())
                 .status(game.getStatus())
                 .build(),HttpStatus.OK);
         
