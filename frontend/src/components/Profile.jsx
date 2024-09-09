@@ -36,7 +36,7 @@ const Profile = () => {
       }
       else{
         const data=await response.json();
-        console.log(data.last10);
+        // console.log(data.last10);
         setPlayerData(data);
       }
       

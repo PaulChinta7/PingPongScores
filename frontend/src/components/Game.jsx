@@ -4,33 +4,37 @@ import { useNavigate } from 'react-router-dom';
 const Game = () => {
   const apiUrl=process.env.REACT_APP_API_URL;
   const userId=sessionStorage.getItem('id');
-  const [flag,setFlag]=useState(false);
+  
   const token=sessionStorage.getItem('token');
   const [player2Id,setPlayer2Id]=useState("");
   const [gamePoint,setGamePoint]=useState("");
   const [player2Name,setPlayer2Name]=useState("");
+
+  const [player2NameError,setPlayer2NameError]=useState(false);
+  const [gamePointError,setGamePointError]=useState(false);
+
   const navigate=useNavigate();
 
 const handleFriend=(friendId,friendName)=>{
   // console.log(friendId);
   setPlayer2Id(friendId);
   setPlayer2Name(friendName);
+  setPlayer2NameError(false);
 }
 const handleGamePoint=(e)=>{
   setGamePoint(e.target.value);
+  setGamePointError(false);
 }
   const handleCreateGame= async ()=>{
     if(player2Id===""){
-      alert("Choose a player to play with");
+      setPlayer2NameError(true);
     }
     else if(gamePoint===''){
-      alert("choose a gamepoint");
+      setGamePointError(true);
     }
-    else{
-
-      setFlag(true);  
+    else{ 
       try{
-        console.log(userId,player2Id,gamePoint);
+        // console.log(userId,player2Id,gamePoint);
         const payload={"player1Id":userId,"player2Id":player2Id,"gamePoint":gamePoint};
         const response=await fetch(`${apiUrl}/game/createGame`,{
           method:'POST',
@@ -46,6 +50,7 @@ const handleGamePoint=(e)=>{
         sessionStorage.setItem('gameId',gameid);
         // console.log(gameid);
         navigate("/live");
+        
         if(!response.ok){
           throw new Error("Error");
         }
@@ -75,14 +80,14 @@ const handleGamePoint=(e)=>{
           }
       })
       const data=await response.json();
-      if(response.status===401){
-        navigate("/");
-      }
+      // console.log(data);
+     
       // console.log(data);
       setFriends(data);
     
       }
       catch(error){
+        navigate("/");
         console.log(error);
       }
     }
@@ -97,6 +102,9 @@ const handleGamePoint=(e)=>{
     <div className='PlayGame_div'>
     <h4>Play Game</h4>
     <div className='Game_playerDiv'> <span className='Game_playerSubtitle'>Player:</span> <span className='Game_player'> {player2Name ? player2Name.toUpperCase() :<>Select a Friend to play</>}</span></div>
+    {player2NameError && (
+        <div className="Login_error-message">Did not select any player!</div>
+      )}
     <select onChange={handleGamePoint}>
     <option value="" >Select Gamepoint</option>
       <option value="5">5</option>
@@ -104,6 +112,9 @@ const handleGamePoint=(e)=>{
       <option value="15">15</option>
       <option value="21">21</option>
     </select> <br />
+    {gamePointError && (
+        <div className="Login_error-message">Did not select any Gamepoint!</div>
+      )}
     <button onClick={handleCreateGame} className='btn btn-dark'>Request Game</button>
     </div>
     </div>

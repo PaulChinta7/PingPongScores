@@ -1,9 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Match = (props) => {
-
+  const [time,setTime]=useState("");
+  const [date,setDate]=useState("");
   const game=props.game;
   
+  const getFromattedDate=(date)=>{
+    const dateObj=new Date(date);
+    setDate((dateObj.getMonth()+1)+"/"+dateObj.getDate()+"/"+dateObj.getFullYear())
+    
+    if(dateObj.getHours()>12){
+      setTime((dateObj.getHours()-12)+":"+dateObj.getMinutes()+"pm");
+    }
+    else{
+      setTime((dateObj.getHours()-12)+":"+dateObj.getMinutes()+"am");
+    }
+
+  }
+  useEffect(()=>{
+    getFromattedDate(game.gameDate);
+  },[])
+
   return (
     <>
 
@@ -14,8 +31,9 @@ const Match = (props) => {
       {/* <span className='Match_id'>{game.id}</span>  */}
       <span className='Match_status'>{game.status}</span>
       <div className='Match_timestamp'>
-      <span className='Match_date'>08/30/2024</span>
-      <span className='Match_time'>8:03pm</span> 
+      <span className='Match_date'>{date}</span>
+      
+      <span className='Match_time'>{time}</span> 
       </div>
       </div>
 

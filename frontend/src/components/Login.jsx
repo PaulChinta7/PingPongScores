@@ -1,18 +1,20 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Container } from 'react-bootstrap';
 const Login = () => {
     const [username,setUsername]=useState("");
     const [password,setPassword]=useState("");
+    const [usernameError,setUsernameError]=useState(false);
+    const [passwordError,setPasswordError]=useState(false);
     const apiUrl=process.env.REACT_APP_API_URL;
     sessionStorage.setItem('token','');
     sessionStorage.setItem('id','');
     sessionStorage.setItem('gameId','');
     const navigate=useNavigate();
-    const handleUsernameChange=(e)=>{setUsername(e.target.value)};
-    const handlePasswordChange=(e)=>{setPassword(e.target.value)};
+    const handleUsernameChange=(e)=>{setUsername(e.target.value); setUsernameError(false)};
+    const handlePasswordChange=(e)=>{setPassword(e.target.value);setPasswordError(false)};
     const handleLogin = ()=>{
         fetchToken();
         
@@ -22,7 +24,7 @@ const Login = () => {
       const fetchToken=async ()=>{
         try{
 
-            const loginData={ "name":username,
+            const loginData={ "email":username,
                 "password":password};
             const response=await fetch(`${apiUrl}/new/login`,{
                 method:"POST",
@@ -40,11 +42,13 @@ const Login = () => {
                     navigate("/home");
                 }
                 if(token.status===404){
-                    console.log("A username not found");
+                    // console.log("A username not found");
+                    setUsernameError(true);
                 }
             } 
             else if(response.status===401){
-                console.log("Wrong password");
+                // console.log("Wrong password");
+                setPasswordError(true);
             }
              else {
                 console.log("An unexpected error occurred.");
@@ -69,20 +73,27 @@ const Login = () => {
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Username</Form.Label>
         <Form.Control type="text" placeholder="Enter username"   onChange={handleUsernameChange}/>
-        <Form.Text className="text-muted">
-          We'll never share your email with anyone else.
-        </Form.Text>
+        {usernameError && (
+        <div className="Login_error-message">Your username is incorrect. Please try again.</div>
+      )}
+        
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
         <Form.Control type="password" placeholder="Password"  onChange={handlePasswordChange}/>
       </Form.Group>
+      {passwordError && (
+        <div className="Login_error-message">Your password is incorrect. Please try again.</div>
+      )}
     
       <Button variant="primary"onClick={handleLogin}>
         Login
       </Button>
     </Form>
+    <p><Link>Forgot password?</Link></p>
+    <p><Link to="/register">New? Register to Log in!</Link></p>
+
     </Container>
     </>
   )

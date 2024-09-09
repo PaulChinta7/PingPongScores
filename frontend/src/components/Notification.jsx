@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { NavDropdown } from 'react-bootstrap';
+import Game from './Game';
 
 const Notification = () => {
 
@@ -7,6 +8,22 @@ const Notification = () => {
   const playerId=sessionStorage.getItem('id');
   const token=sessionStorage.getItem('token');
   const [requests,setRequests]=useState([]);
+
+
+    
+  // const getFromattedDate=(date)=>{
+  //   const dateObj=new Date(date);
+  //   // setDate((dateObj.getMonth()+1)+"/"+dateObj.getDate()+"/"+dateObj.getFullYear())
+    
+  //   if(dateObj.getHours()>12){
+  //     return (dateObj.getHours()-12)+":"+dateObj.getMinutes()+"pm";
+  //   }
+  //   else{
+  //     return (dateObj.getHours()-12)+":"+dateObj.getMinutes()+"am";
+  //   }
+
+  // } {()=>{getFromattedDate(request.requestDate)}}
+
 
   const fetchFriendRequests= async ()=>{
     try{
@@ -48,16 +65,34 @@ const Notification = () => {
     }
   }
 
+  const handleRejectFriend= async (requestId)=>{
+    try{
+      const response= await fetch(`${apiUrl}/friendRequest/rejectFriend?friendRequestId=`+requestId,{
+        method:'POST',
+        headers:{
+            'Authorization':`Bearer ${token}`,
+            'Content-Type':'application/json',
+        }
+    })
+    if(response.ok){
+      console.log("Accepted");
+    }
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
+
   useEffect(()=>{
     fetchFriendRequests();
-  });
+  },[]);
 
   return (
     <>
     
       <NavDropdown.Item className='Navbar_dropdown'>
       
-    {requests.length===0?<p>No Notifications</p>:requests.map(request=>( <div key={request.id} className='Notification_notif'> <p className='Notification_requestMsg'> {request.requestorName} has requested to be your friend  </p> <button className='btn btn-sm btn-dark btn12' onClick={()=>{handleAcceptFriend(request.id)}}>Accept</button> <button className='btn btn-sm btn-dark btn12' >Reject</button><NavDropdown.Divider /> </div> ))}
+    {requests.length===0?<p>No Notifications</p>:requests.map(request=>( <div key={request.id} className='Notification_notif'> <p className='Notification_requestMsg'> {request.requestorName} has requested to be your friend </p> <button className='btn btn-sm btn-dark btn12' onClick={()=>{handleAcceptFriend(request.id)}}>Accept</button> <button  className='btn btn-sm btn-dark btn12' onClick={()=>{handleRejectFriend(request.id)}}>Reject</button><NavDropdown.Divider /> </div> ))}
       </NavDropdown.Item>
     </>
   )

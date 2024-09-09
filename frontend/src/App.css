@@ -11,6 +11,16 @@ td{
   text-align: center;
  
 }
+
+.Login_error-message {
+  color: red;
+  background-color: #fdd;
+  border: 1px solid red;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 4px;
+}
+
 /* .bg {
   position: relative;
   background-image: url('./bg.jpg'); 

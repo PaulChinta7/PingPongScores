@@ -8,7 +8,7 @@ const Home = () => {
 
    How to Play section!
     </div>
-    
+      
     </>
   )
 }

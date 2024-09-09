@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Register = () => {
 
@@ -23,12 +23,16 @@ const Register = () => {
                 },
                 body:JSON.stringify(payload)
             })
-            if(response.ok){
+            if(response.status==200){
                 navigate('/');
+            }
+            if(response.status==208){
+              console.log("Email already exist!");
             }
         }
         catch(error){
-            console.log(error);
+            // console.log(error.response);
+            console.log(error.status);
         }
       }
 
@@ -73,6 +77,7 @@ const Register = () => {
 
     <button className="btn btn-dark" onClick={handleRegister}>Register</button>
   </div>
+    <Link to="/">Already have an account? Log in here</Link>
  </div>
 
 

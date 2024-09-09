@@ -3,7 +3,7 @@ import Game from './components/Game';
 import Friends from './components/Friends';
 import Home from './components/Home';
 import './App.css';
-import {Route,BrowserRouter as Router, Routes } from 'react-router-dom';
+import {Route, Routes, useLocation } from 'react-router-dom';
 import Profile from './components/Profile';
 import Register from './components/Register';
 import LiveGame from './components/LiveGame';
@@ -12,14 +12,14 @@ import Notification from './components/Notification';
 import NavBar from './components/NavBar';
 
 function App() {
-  const sess=sessionStorage.getItem('id');
+  const location=useLocation();
+  const noNavBarPaths = ['/', '/register'];
+  
   return (
     <>
-    <Router>
-      
+ 
 
-
-      <NavBar/>
+    {!noNavBarPaths.includes(location.pathname) && <NavBar />}
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
@@ -32,7 +32,6 @@ function App() {
         <Route path="/notifications" element={<Notification />} />
         <Route path="/logout" element={<Login />} />
       </Routes>
-    </Router>
     </>
   );
 }

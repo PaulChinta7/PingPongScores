@@ -7,6 +7,8 @@ const Search = () => {
 
     const [players,setPlayers]=useState([]);
     const [searchTerm,setSearchTerm]=useState("");
+    
+
 
 
 
@@ -45,6 +47,7 @@ const Search = () => {
 
 
     const handleAddFriend= async (acceptorId)=>{
+     
         const payload={"acceptorId":acceptorId,"requestorId":playerId}
         try{
 
@@ -66,10 +69,13 @@ const response= await fetch(`${apiUrl}/friendRequest/addFriend`,{
             console.log(error);
         }
     }
+    const handleRefresh=()=>{
+        console.log("Refresh");
+    }
 
     useEffect(()=>{
         fetchPlayers();
-    });
+    },[handleRefresh]);
 
 
   return (
@@ -92,7 +98,7 @@ const response= await fetch(`${apiUrl}/friendRequest/addFriend`,{
       <td>{player.email}</td>
       <td>{player.gamesWon}</td>
       <td>{player.gamesLost}</td>
-      <td>  <button  className='btn btn-dark btn12 width80' onClick={()=>{handleAddFriend(player.id)}}>Add friend</button></td>
+      <td>  <button  className='btn btn-dark btn12 width80' onClick={()=>{handleAddFriend(player.id);handleRefresh()}} disabled={player.requested?true:false}>{player.requested?<>Requested</>:<>Add friend</>}</button></td>
     </tr>  ))}
     
    
