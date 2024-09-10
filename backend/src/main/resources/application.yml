@@ -3,7 +3,7 @@ spring:
     name: backend
   data:
     mongodb:
-      uri: mongodb://localhost:27017/GameDatabase
+      uri: mongodb+srv://paulchinta7:jEI15WQIgMQG6JDA@cluster0.3vba6.mongodb.net/GameDatabase?retryWrites=true&w=majority&appName=Cluster0
   security:
     user:
       name: paul
