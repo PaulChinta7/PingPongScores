@@ -15,7 +15,7 @@ const NavBar = () => {
 
 <Navbar expand="sm" className="Navbar_navbar bg-body-tertiary ">
 
-        <Navbar.Brand className='Navbar_brand'><img src={IMG} alt="Logo" className='Navbar_logo' /></Navbar.Brand>
+        <Navbar.Brand className='Navbar_brand'><img src={IMG} alt="Logo" className='Navbar_logo' /> <span className='fs-7'>Table Tennis</span> </Navbar.Brand>
 
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" className='Navbar_collapse'/>

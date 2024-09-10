@@ -12,6 +12,36 @@ td{
  
 }
 
+.logo-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top:60px;
+}
+.special-center-parent{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.special-center-parent-column{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.logo{
+  width: 200px;
+  height: 130px;
+  
+}
+.Profile_loadingStyle{
+    display: flex;
+    height: 70vh;
+    justify-content: center;
+    align-items: center;
+
+}
+
 .Login_error-message {
   color: red;
   background-color: #fdd;

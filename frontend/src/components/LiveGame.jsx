@@ -8,6 +8,8 @@ const LiveGame = () => {
     const [msg,setMsg]=useState('');
     const apiUrl=process.env.REACT_APP_API_URL
     const navigate=useNavigate();
+    const [isLoading,setIsLoading]=useState(true);
+    const [buttonIsLoading,setButtonIsLoading]=useState(false);
     const [liveGame,setLiveGame]=useState({"id":"","player1":"","player1Id":"","player1Score":0,"player2Id":"","player2Score":0,"player2":"","gamePoint":0,"status":""});
     const fetchLiveGame=async ()=>{
         
@@ -22,6 +24,7 @@ const LiveGame = () => {
                 })
                 const game=await response.json();
                 setLiveGame(game);
+                setIsLoading(false);
               }
               catch(error){
                 console.log(error);
@@ -40,6 +43,7 @@ const LiveGame = () => {
             })
             if(response.ok){
                 // console.log("incremented"+playerId);
+                setButtonIsLoading(false);
             }
 
         }
@@ -49,25 +53,33 @@ const LiveGame = () => {
     }
 
     const handlePlayer1Score=()=>{
-        setLiveGame(prev=>({...prev,player1Score:prev.player1Score+1}));
+      setButtonIsLoading(true);
+        // setLiveGame(prev=>({...prev,player1Score:prev.player1Score+1}));
         incrementPoint(liveGame.player1Id);
+        
 
         
     }
 
     const handlePlayer2Score=()=>{
-        setLiveGame(prev=>({...prev,player2Score:prev.player2Score+1}));
+      setButtonIsLoading(true);
+        // setLiveGame(prev=>({...prev,player2Score:prev.player2Score+1}));
         incrementPoint(liveGame.player2Id);
+        // setButtonIsLoading(false);
 
         
     }
     useEffect(()=>{
         fetchLiveGame();
+        
     });
 
   return (
 <>
-(<div className='container LiveGame_div'>
+{isLoading? <div className='Profile_loadingStyle'><div className="spinner-border m-5 p-4 "   role="status"></div> 
+
+</div>: 
+<div className='container LiveGame_div'>
   <p>Live game</p>
    
 
@@ -99,12 +111,21 @@ const LiveGame = () => {
       
     </div>
     <p className='LiveGame_status'>{liveGame.status}</p>
-    <button className='btn btn-dark' onClick={handlePlayer1Score}>+1 {liveGame.player1}</button> <br />
-    <button className='btn btn-dark' onClick={handlePlayer2Score}>+1 {liveGame.player2}</button>
+    {buttonIsLoading? <button className="btn btn-dark" type="button" disabled>
+        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Wait!
+      </button>  :
+    <button className='btn btn-dark' onClick={handlePlayer1Score}>+1 {liveGame.player1}</button>} <br />
+
+{buttonIsLoading? <button className="btn btn-dark" type="button" disabled>
+        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Wait!
+      </button>  :<button className='btn btn-dark' onClick={handlePlayer2Score}>+1 {liveGame.player2}</button>}
+
     <br />
     <button  className='btn btn-dark' onClick={()=>{navigate("/game")}}>End match</button>
 
-</div>)
+</div>}
 </>
 
   )

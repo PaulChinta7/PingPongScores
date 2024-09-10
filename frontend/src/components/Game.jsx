@@ -13,6 +13,8 @@ const Game = () => {
   const [player2NameError,setPlayer2NameError]=useState(false);
   const [gamePointError,setGamePointError]=useState(false);
 
+  const [isLoading,setIsLoading]=useState(false);
+
   const navigate=useNavigate();
 
 const handleFriend=(friendId,friendName)=>{
@@ -70,6 +72,7 @@ const handleGamePoint=(e)=>{
   const id=sessionStorage.getItem('id');
  
   useEffect(()=>{
+    setIsLoading(true);
     const handleFriends= async ()=>{
       try{
         const response= await fetch(`${apiUrl}/player/getFriendsById?id=`+id,{
@@ -84,6 +87,7 @@ const handleGamePoint=(e)=>{
      
       // console.log(data);
       setFriends(data);
+      setIsLoading(false);
     
       }
       catch(error){
@@ -95,7 +99,9 @@ const handleGamePoint=(e)=>{
   },[])
   
 
-  return (<>
+  return (<>  {isLoading? <div className='Profile_loadingStyle'><div className="spinner-border m-5 p-4 "   role="status"></div> 
+
+    </div>:
   <div className="container py-5">
    <div className="row">
    <div className="col-lg-6">
@@ -156,6 +162,8 @@ const handleGamePoint=(e)=>{
    </div>
 
   </div>
+
+  }
 
   
 

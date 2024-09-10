@@ -11,6 +11,10 @@ const Profile = () => {
   const apiUrl=process.env.REACT_APP_API_URL;
   const token=sessionStorage.getItem('token');
   const navigate=useNavigate();
+
+  const [isLoading,setIsLoading]=useState(false);
+
+
   const fetchPlayerData=async ()=>{
     try{
       const response=await fetch(`${apiUrl}/player/getPlayerById?id=`+id,{
@@ -38,6 +42,7 @@ const Profile = () => {
         const data=await response.json();
         // console.log(data.last10);
         setPlayerData(data);
+        setIsLoading(false);
       }
       
 
@@ -47,11 +52,15 @@ const Profile = () => {
     }
   }
   useEffect(()=>{
+    setIsLoading(true);
     fetchPlayerData();
   },[])
 
   return (
     <>
+    {isLoading? <div className='Profile_loadingStyle'><div className="spinner-border m-5 p-4 "   role="status"></div> 
+
+</div>: 
     <div className='container py-3'>
         
           
@@ -98,7 +107,7 @@ const Profile = () => {
            
               
            
-    </div>
+    </div>}
     
    
     
